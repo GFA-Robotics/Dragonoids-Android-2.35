@@ -72,10 +72,14 @@ public class TeleOpMecanum extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
+            //output telemetry of motors
+            telemetry.addData("rightFront", + );
+            telemetry.addData("leftFront", + motorLF.getPower());
+            telemetry.addData("rightBack", + motorRB.getPower());
+            telemetry.addData("leftBack", + motorLB.getPower());
             telemetry.update();
 
             float turningAmount = gamepad1.left_stick_x;
-
             // we're going to convert to polar, add pi/4 to theta, and convert back to cartesian.
             double r = Math.sqrt(Math.pow(gamepad1.right_stick_x, 2) + Math.pow(-gamepad1.right_stick_y, 2));
             double t = Math.atan(-gamepad1.right_stick_y/gamepad1.right_stick_x); // over to polar
@@ -83,10 +87,50 @@ public class TeleOpMecanum extends LinearOpMode {
             double processedX = Math.cos(newt)*r;
             double processedY = Math.sin(newt)*r; // back to cartesian
 
-            motorRF.setPower(Range.clip(-processedX - turningAmount, -0.99, 0.99));
-            motorLF.setPower(Range.clip(processedY + turningAmount, -0.99, 0.99));
-            motorRB.setPower(Range.clip(processedY - turningAmount, -0.99, 0.99));
-            motorLB.setPower(Range.clip(-processedX + turningAmount, -0.99, 0.99));
+            //manually set the power of RF
+            double RF = -processedX - turningAmount;
+            double RB = processedY - turningAmount;
+            double LF = processedY + turningAmount;
+            double LB = -processedX + turningAmount;
+
+            System.out.println(RF + ", " + RB + ", " + LF + ", " + LB);
+            /*
+            if ((-processedX-turningAmount)>1) {
+                motorRF.setPower(1);
+            } else if ((-processedX-turningAmount)<-1) {
+                motorRF.setPower(-1);
+            } else {
+                motorRF.setPower=Range.clip(-processedX - turningAmount, -1.0, 1.0);
+            }
+
+            //manually set the power of RB
+            if ((processedY - turningAmount)>1) {
+                motorRB.setPower(1);
+            } else if ((processedY - turningAmount)<-1) {
+                motorRB.setPower(-1);
+            } else {
+                motorRB.setPower=Range.clip(processedY - turningAmount, -1.0, 1.0);
+            }
+
+            //manually set the power of LF
+
+            if ((processedY + turningAmount)>1) {
+                motorLF.setPower(1);
+            } else if ((processedY + turningAmount)<-1) {
+                motorLF.setPower(-1);
+            } else {
+                motorLF.setPower=Range.clip(processedY + turningAmount, -1.0, 1.0);
+            }
+            //manually set the power of LB
+            if ((-processedX + turningAmount)>1) {
+                motorLB.setPower(1);
+            } else if ((-processedX + turningAmount)<-1) {
+                motorLB.setPower(-1);
+            } else {
+                motorLB.setPower=Range.clip(-processedX + turningAmount, -1.0, 1.0);
+            }
+            */
+
         }
     }
 }
