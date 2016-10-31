@@ -61,6 +61,8 @@ public class TeleOpMode_Linear extends LinearOpMode {
     DcMotor motorLF = null;
     DcMotor motorLB = null;
 
+    DcMotor motorDisp = null;
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -94,6 +96,11 @@ public class TeleOpMode_Linear extends LinearOpMode {
             motorRB.setPower(-gamepad1.right_stick_y);
             motorLF.setPower(-gamepad1.left_stick_y);
             motorLB.setPower(-gamepad1.left_stick_y);
+
+            if (gamepad1.right_bumper==true) {
+                motorDisp.setPower(.65);
+            }
+
         }
     }
 }

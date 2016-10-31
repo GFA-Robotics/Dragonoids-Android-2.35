@@ -43,10 +43,16 @@ public class TeleOpMecanum extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
-    DcMotor motorRF = null;
-    DcMotor motorRB = null;
-    DcMotor motorLF = null;
-    DcMotor motorLB = null;
+    DcMotor motorRF;
+    DcMotor motorRB;
+    DcMotor motorLF;
+    DcMotor motorLB;
+
+    DcMotor motorDisp;
+
+    double drive;
+    double strafe;
+    double rotate;
 
     @Override
     public void runOpMode() {
@@ -62,6 +68,8 @@ public class TeleOpMecanum extends LinearOpMode {
         motorLF = hardwareMap.dcMotor.get("left_drive_front");
         motorLB = hardwareMap.dcMotor.get("left_drive_back");
 
+        motorDisp = hardwareMap.dcMotor.get("collector");
+
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -72,21 +80,73 @@ public class TeleOpMecanum extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
+            //output telemetry of motors
+            telemetry.addData("rightFront", + motorRF.getPower());
+            telemetry.addData("leftFront", + motorLF.getPower());
+            telemetry.addData("rightBack", + motorRB.getPower());
+            telemetry.addData("leftBack", + motorLB.getPower());
             telemetry.update();
 
-            float turningAmount = gamepad1.left_stick_x;
 
-            // we're going to convert to polar, add pi/4 to theta, and convert back to cartesian.
-            double r = Math.sqrt(Math.pow(gamepad1.right_stick_x, 2) + Math.pow(-gamepad1.right_stick_y, 2));
-            double t = Math.atan(-gamepad1.right_stick_y/gamepad1.right_stick_x); // over to polar
-            double newt = t + (Math.PI / 4); // adjust theta
-            double processedX = Math.cos(newt)*r;
-            double processedY = Math.sin(newt)*r; // back to cartesian
+            if (gamepad2.a) {
+                motorDisp.setPower(-.65);
+            }
+            else if(gamepad2.b) {
+                motorDisp.setPower(.45);
+            }
+            else {
+                motorDisp.setPower(0);
+            }
 
-            motorRF.setPower(Range.clip(-processedX - turningAmount, -0.99, 0.99));
-            motorLF.setPower(Range.clip(processedY + turningAmount, -0.99, 0.99));
-            motorRB.setPower(Range.clip(processedY - turningAmount, -0.99, 0.99));
-            motorLB.setPower(Range.clip(-processedX + turningAmount, -0.99, 0.99));
+            drive	= -gamepad1.left_stick_y;
+            strafe	= gamepad1.left_stick_x;
+            rotate	= gamepad1.right_stick_x;
+
+            motorLF.setPower(Range.clip(drive	+ strafe+ rotate, -1.0, 1.0));
+            motorLB.setPower(Range.clip(drive	- strafe+ rotate, -1.0, 1.0));
+            motorRF.setPower(Range.clip(drive	- strafe- rotate, -1.0, 1.0));
+            motorRB.setPower(Range.clip(drive	+ strafe- rotate, -1.0, 1.0));
+
+
+        }
+
+    }
+    private float scaleInputOriginal(double dVal)  {
+        double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
+                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
+
+        // get the corresponding index for the scaleInput array.
+        int index = (int) (dVal * 16.0);
+
+        // index should be positive.
+        if (index < 0) {
+            index = -index;
+        }
+
+        // index cannot exceed size of array minus 1.
+        if (index > 16) {
+            index = 16;
+        }
+
+        // get value from the array.
+        double dScale = 0.0;
+        if (dVal < 0) {
+            dScale = -scaleArray[index];
+        } else {
+            dScale = scaleArray[index];
+        }
+
+        // return scaled value.
+        return (float)dScale;
+    }
+    private float scaleInput (double value) {
+        // Return the value (from -1 to 1) squared to scale it quadratically
+        float magnitude = (float) Math.pow(value, 2);
+        if (value < 0) {
+            return -1 * magnitude;
+        }
+        else {
+            return magnitude;
         }
     }
 }
