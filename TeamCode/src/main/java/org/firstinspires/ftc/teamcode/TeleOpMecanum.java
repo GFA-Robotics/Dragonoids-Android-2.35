@@ -81,64 +81,36 @@ public class TeleOpMecanum extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             //output telemetry of motors
-            telemetry.addData("rightFront", + );
+            telemetry.addData("rightFront", + motorRF.getPower());
             telemetry.addData("leftFront", + motorLF.getPower());
             telemetry.addData("rightBack", + motorRB.getPower());
             telemetry.addData("leftBack", + motorLB.getPower());
             telemetry.update();
 
-            float turningAmount = gamepad1.left_stick_x;
-            // we're going to convert to polar, add pi/4 to theta, and convert back to cartesian.
-            double r = Math.sqrt(Math.pow(gamepad1.right_stick_x, 2) + Math.pow(-gamepad1.right_stick_y, 2));
-            double t = Math.atan(-gamepad1.right_stick_y/gamepad1.right_stick_x); // over to polar
-            double newt = t + (Math.PI / 4); // adjust theta
-            double processedX = Math.cos(newt)*r;
-            double processedY = Math.sin(newt)*r; // back to cartesian
 
-            //manually set the power of RF
-            double RF = -processedX - turningAmount;
-            double RB = processedY - turningAmount;
-            double LF = processedY + turningAmount;
-            double LB = -processedX + turningAmount;
-
-            System.out.println(RF + ", " + RB + ", " + LF + ", " + LB);
-            /*
-            if ((-processedX-turningAmount)>1) {
-                motorRF.setPower(1);
-            } else if ((-processedX-turningAmount)<-1) {
-                motorRF.setPower(-1);
-            } else {
-                motorRF.setPower=Range.clip(-processedX - turningAmount, -1.0, 1.0);
+            if (gamepad2.a) {
+                motorDisp.setPower(-.65);
+            }
+            else if(gamepad2.b) {
+                motorDisp.setPower(.45);
+            }
+            else {
+                motorDisp.setPower(0);
             }
 
-            //manually set the power of RB
-            if ((processedY - turningAmount)>1) {
-                motorRB.setPower(1);
-            } else if ((processedY - turningAmount)<-1) {
-                motorRB.setPower(-1);
-            } else {
-                motorRB.setPower=Range.clip(processedY - turningAmount, -1.0, 1.0);
-            }
+            drive	= -gamepad1.left_stick_y;
+            strafe	= gamepad1.left_stick_x;
+            rotate	= gamepad1.right_stick_x;
 
-            //manually set the power of LF
+            motorLF.setPower(Range.clip(drive	+ strafe+ rotate, -1.0, 1.0));
+            motorLB.setPower(Range.clip(drive	- strafe+ rotate, -1.0, 1.0));
+            motorRF.setPower(Range.clip(drive	- strafe- rotate, -1.0, 1.0));
+            motorRB.setPower(Range.clip(drive	+ strafe- rotate, -1.0, 1.0));
 
-            if ((processedY + turningAmount)>1) {
-                motorLF.setPower(1);
-            } else if ((processedY + turningAmount)<-1) {
-                motorLF.setPower(-1);
-            } else {
-                motorLF.setPower=Range.clip(processedY + turningAmount, -1.0, 1.0);
-            }
-            //manually set the power of LB
-            if ((-processedX + turningAmount)>1) {
-                motorLB.setPower(1);
-            } else if ((-processedX + turningAmount)<-1) {
-                motorLB.setPower(-1);
-            } else {
-                motorLB.setPower=Range.clip(-processedX + turningAmount, -1.0, 1.0);
-            }
-            */
 
+        }
+
+    }
     private float scaleInputOriginal(double dVal)  {
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
