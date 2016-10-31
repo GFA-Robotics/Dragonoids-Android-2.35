@@ -43,10 +43,16 @@ public class TeleOpMecanum extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
-    DcMotor motorRF = null;
-    DcMotor motorRB = null;
-    DcMotor motorLF = null;
-    DcMotor motorLB = null;
+    DcMotor motorRF;
+    DcMotor motorRB;
+    DcMotor motorLF;
+    DcMotor motorLB;
+
+    DcMotor motorDisp;
+
+    double drive;
+    double strafe;
+    double rotate;
 
     @Override
     public void runOpMode() {
@@ -61,6 +67,8 @@ public class TeleOpMecanum extends LinearOpMode {
         motorRB = hardwareMap.dcMotor.get("right_drive_back");
         motorLF = hardwareMap.dcMotor.get("left_drive_front");
         motorLB = hardwareMap.dcMotor.get("left_drive_back");
+
+        motorDisp = hardwareMap.dcMotor.get("collector");
 
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
