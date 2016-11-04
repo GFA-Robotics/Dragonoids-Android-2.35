@@ -35,6 +35,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -50,6 +51,8 @@ public class TeleOpMecanum extends LinearOpMode {
 
     DcMotor motorDisp;
 
+    DcMotor motorShootOne;
+    DcMotor motorShootTwo;
     double drive;
     double strafe;
     double rotate;
@@ -70,9 +73,12 @@ public class TeleOpMecanum extends LinearOpMode {
 
         motorDisp = hardwareMap.dcMotor.get("collector");
 
+        motorShootOne = hardwareMap.dcMotor.get("shooterOne");
+        motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -98,6 +104,10 @@ public class TeleOpMecanum extends LinearOpMode {
                 motorDisp.setPower(0);
             }
 
+            if (gamepad2.y){
+                motorShootOne.setPower(1.0);
+                motorShootTwo.setPower(1.0);
+            }
             drive	= -gamepad1.left_stick_y;
             strafe	= gamepad1.left_stick_x;
             rotate	= gamepad1.right_stick_x;
