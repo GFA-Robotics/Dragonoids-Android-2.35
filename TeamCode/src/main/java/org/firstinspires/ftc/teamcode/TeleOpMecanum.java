@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -53,6 +54,8 @@ public class TeleOpMecanum extends LinearOpMode {
 
     DcMotor motorShootOne;
     DcMotor motorShootTwo;
+
+    Servo loader;
     double drive;
     double strafe;
     double rotate;
@@ -76,9 +79,11 @@ public class TeleOpMecanum extends LinearOpMode {
         motorShootOne = hardwareMap.dcMotor.get("shooterOne");
         motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
 
+        loader = hardwareMap.servo.get("loader");
+
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
+        motorShootOne.setDirection(DcMotor.Direction.REVERSE);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -91,7 +96,7 @@ public class TeleOpMecanum extends LinearOpMode {
             telemetry.addData("leftFront", + motorLF.getPower());
             telemetry.addData("rightBack", + motorRB.getPower());
             telemetry.addData("leftBack", + motorLB.getPower());
-            telemetry.update();
+
 
 
             if (gamepad2.a) {
@@ -99,23 +104,49 @@ public class TeleOpMecanum extends LinearOpMode {
             }
             else if(gamepad2.b) {
                 motorDisp.setPower(.45);
-            }
-            else {
+            } else {
                 motorDisp.setPower(0);
             }
 
-            if (gamepad2.y){
+            if (gamepad2.left_bumper){
                 motorShootOne.setPower(1.0);
                 motorShootTwo.setPower(1.0);
+            } else {
+                motorShootOne.setPower(0);
+                motorShootTwo.setPower(0);
             }
+
+            if (gamepad2.right_bumper) {
+                loader.setPosition(.45);
+            } else {
+                loader.setPosition(0);
+            }
+
+            float turningAmount = gamepad1.left_stick_x;
+
+            // we're going to convert to polar, add pi/4 to theta, and convert back to cartesian.
+            double r = Math.sqrt(Math.pow(gamepad1.right_stick_x, 2) + Math.pow(-gamepad1.right_stick_y, 2));
+            double t = 0;
+            if(gamepad1.right_stick_x != 0) {
+                t = Math.atan(-gamepad1.right_stick_y / gamepad1.right_stick_x); // over to polar
+            }
+            double newt = t + (Math.PI / 4); // adjust theta
+            double processedX = Math.cos(newt)*r;
+            double processedY = Math.sin(newt)*r; // back to cartesian
+
+            /*
             drive	= -gamepad1.left_stick_y;
             strafe	= gamepad1.left_stick_x;
             rotate	= gamepad1.right_stick_x;
+            */
+            telemetry.addData("processedX", + processedX);
+            telemetry.addData("processedX", + processedY);
+            telemetry.update();
 
-            motorLF.setPower(Range.clip(drive	+ strafe+ rotate, -1.0, 1.0));
-            motorLB.setPower(Range.clip(drive	- strafe+ rotate, -1.0, 1.0));
-            motorRF.setPower(Range.clip(drive	- strafe- rotate, -1.0, 1.0));
-            motorRB.setPower(Range.clip(drive	+ strafe- rotate, -1.0, 1.0));
+            motorRF.setPower(Range.clip(-processedX - turningAmount, -1, 1));
+            motorLF.setPower(Range.clip(processedY + turningAmount, -1, 1));
+            motorRB.setPower(Range.clip(processedY - turningAmount, -1, 1));
+            motorLB.setPower(Range.clip(-processedX + turningAmount, -1, 1));
 
 
         }
