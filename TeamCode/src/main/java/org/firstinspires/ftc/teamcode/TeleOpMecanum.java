@@ -35,6 +35,11 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+<<<<<<< HEAD
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+=======
+>>>>>>> parent of 40b00c0... Added shooting motors to teleopmecanum
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -50,6 +55,13 @@ public class TeleOpMecanum extends LinearOpMode {
 
     DcMotor motorDisp;
 
+<<<<<<< HEAD
+    DcMotor motorShootOne;
+    DcMotor motorShootTwo;
+
+    Servo loader;
+=======
+>>>>>>> parent of 40b00c0... Added shooting motors to teleopmecanum
     double drive;
     double strafe;
     double rotate;
@@ -71,8 +83,14 @@ public class TeleOpMecanum extends LinearOpMode {
         motorDisp = hardwareMap.dcMotor.get("collector");
 
 
+        loader = hardwareMap.servo.get("loader");
+
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+<<<<<<< HEAD
+        motorShootOne.setDirection(DcMotor.Direction.REVERSE);
+=======
+>>>>>>> parent of 40b00c0... Added shooting motors to teleopmecanum
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -85,7 +103,7 @@ public class TeleOpMecanum extends LinearOpMode {
             telemetry.addData("leftFront", + motorLF.getPower());
             telemetry.addData("rightBack", + motorRB.getPower());
             telemetry.addData("leftBack", + motorLB.getPower());
-            telemetry.update();
+
 
 //reverted back
             if (gamepad2.a) {
@@ -93,21 +111,57 @@ public class TeleOpMecanum extends LinearOpMode {
             }
             else if(gamepad2.b) {
                 motorDisp.setPower(.45);
-            }
-            else {
+            } else {
                 motorDisp.setPower(0);
             }
 
+<<<<<<< HEAD
+            if (gamepad2.left_bumper){
+                motorShootOne.setPower(1.0);
+                motorShootTwo.setPower(1.0);
+            } else {
+                motorShootOne.setPower(0);
+                motorShootTwo.setPower(0);
+            }
+
+            if (gamepad2.right_bumper) {
+                loader.setPosition(.45);
+            } else {
+                loader.setPosition(0);
+            }
+
+            float turningAmount = gamepad1.left_stick_x;
+
+            // we're going to convert to polar, add pi/4 to theta, and convert back to cartesian.
+            double r = Math.sqrt(Math.pow(gamepad1.right_stick_x, 2) + Math.pow(-gamepad1.right_stick_y, 2));
+            double t = 0;
+            if(gamepad1.right_stick_x != 0) {
+                t = Math.atan(-gamepad1.right_stick_y / gamepad1.right_stick_x); // over to polar
+            }
+            //double newt = t + (Math.PI / 4); // adjust theta
+            double processedX = Math.cos(t)*r;
+            double processedY = Math.sin(t)*r; // back to cartesian
+//                                                                                                          Check how input is coming from controller; re implement newt
+
+
+
+            /*
+=======
+>>>>>>> parent of 40b00c0... Added shooting motors to teleopmecanum
             drive	= -gamepad1.left_stick_y;
             strafe	= gamepad1.left_stick_x;
             rotate	= gamepad1.right_stick_x;
+            */
+            telemetry.addData("processedX", + processedX);
+            telemetry.addData("processedY", + processedY);
+            telemetry.update();
 
-            motorLF.setPower(Range.clip(drive	+ strafe+ rotate, -1.0, 1.0));
-            motorLB.setPower(Range.clip(drive	- strafe+ rotate, -1.0, 1.0));
-            motorRF.setPower(Range.clip(drive	- strafe- rotate, -1.0, 1.0));
-            motorRB.setPower(Range.clip(drive	+ strafe- rotate, -1.0, 1.0));
+            motorRF.setPower(Range.clip(-processedX - turningAmount, -1, 1));
+            motorLF.setPower(Range.clip(processedY + turningAmount, -1, 1));
+            motorRB.setPower(Range.clip(processedY - turningAmount, -1, 1));
+            motorLB.setPower(Range.clip(-processedX + turningAmount, -1, 1));
 
-
+        //do u even hack
         }
 
     }
