@@ -130,9 +130,12 @@ public class TeleOpMecanum extends LinearOpMode {
             if(gamepad1.right_stick_x != 0) {
                 t = Math.atan(-gamepad1.right_stick_y / gamepad1.right_stick_x); // over to polar
             }
-            double newt = t + (Math.PI / 4); // adjust theta
-            double processedX = Math.cos(newt)*r;
-            double processedY = Math.sin(newt)*r; // back to cartesian
+            //double newt = t + (Math.PI / 4); // adjust theta
+            double processedX = Math.cos(t)*r;
+            double processedY = Math.sin(t)*r; // back to cartesian
+//                                                                                                          Check how input is coming from controller; re implement newt
+
+
 
             /*
             drive	= -gamepad1.left_stick_y;
@@ -140,7 +143,7 @@ public class TeleOpMecanum extends LinearOpMode {
             rotate	= gamepad1.right_stick_x;
             */
             telemetry.addData("processedX", + processedX);
-            telemetry.addData("processedX", + processedY);
+            telemetry.addData("processedY", + processedY);
             telemetry.update();
 
             motorRF.setPower(Range.clip(-processedX - turningAmount, -1, 1));
@@ -148,7 +151,7 @@ public class TeleOpMecanum extends LinearOpMode {
             motorRB.setPower(Range.clip(processedY - turningAmount, -1, 1));
             motorLB.setPower(Range.clip(-processedX + turningAmount, -1, 1));
 
-
+        //do u even hack
         }
 
     }
