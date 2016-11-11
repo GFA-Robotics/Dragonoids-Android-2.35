@@ -105,7 +105,7 @@ public class TeleOpMecanum extends LinearOpMode {
             telemetry.addData("leftBack", + motorLB.getPower());
 
 
-//reverted back
+
             if (gamepad2.a) {
                 motorDisp.setPower(-.65);
             }
