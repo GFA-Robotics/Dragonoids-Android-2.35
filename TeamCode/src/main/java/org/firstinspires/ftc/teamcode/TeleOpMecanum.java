@@ -126,33 +126,17 @@ public class TeleOpMecanum extends LinearOpMode {
                 loader.setPosition(0);
             }
 
-            float turningAmount = gamepad1.left_stick_x;
-
-            // we're going to convert to polar, add pi/4 to theta, and convert back to cartesian.
-            double r = Math.sqrt(Math.pow(gamepad1.right_stick_x, 2) + Math.pow(-gamepad1.right_stick_y, 2));
-            double t = 0;
-            if(gamepad1.right_stick_x != 0) {
-                t = Math.atan(-gamepad1.right_stick_y / gamepad1.right_stick_x); // over to polar
-            }
-            //double newt = t + (Math.PI / 4); // adjust theta
-            double processedX = Math.cos(t)*r;
-            double processedY = Math.sin(t)*r; // back to cartesian
-// Check how input is coming from controller; re implement newt
-
             drive	= -gamepad1.left_stick_y;
             strafe	= gamepad1.left_stick_x;
             rotate	= gamepad1.right_stick_x;
-            
-            telemetry.addData("processedX", + processedX);
-            telemetry.addData("processedY", + processedY);
-            telemetry.update();
 
-            motorRF.setPower(Range.clip(-processedX - turningAmount, -1, 1));
-            motorLF.setPower(Range.clip(processedY + turningAmount, -1, 1));
-            motorRB.setPower(Range.clip(processedY - turningAmount, -1, 1));
-            motorLB.setPower(Range.clip(-processedX + turningAmount, -1, 1));
+            motorLF.setPower(Range.clip(drive + strafe + rotate, -1.0, 1.0));
+            motorLB.setPower(Range.clip(drive - strafe + rotate, -1.0, 1.0));
+            motorRF.setPower(Range.clip(drive - strafe - rotate, -1.0, 1.0));
+            motorRB.setPower(Range.clip(drive + strafe - rotate, -1.0, 1.0));
 
         //do u even hack
+            // no
         }
 
     }
