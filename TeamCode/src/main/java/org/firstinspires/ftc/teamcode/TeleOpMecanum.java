@@ -35,11 +35,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-<<<<<<< HEAD
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-=======
->>>>>>> parent of 40b00c0... Added shooting motors to teleopmecanum
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -55,13 +52,11 @@ public class TeleOpMecanum extends LinearOpMode {
 
     DcMotor motorDisp;
 
-<<<<<<< HEAD
     DcMotor motorShootOne;
     DcMotor motorShootTwo;
 
     Servo loader;
-=======
->>>>>>> parent of 40b00c0... Added shooting motors to teleopmecanum
+
     double drive;
     double strafe;
     double rotate;
@@ -87,10 +82,9 @@ public class TeleOpMecanum extends LinearOpMode {
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-<<<<<<< HEAD
+
         motorShootOne.setDirection(DcMotor.Direction.REVERSE);
-=======
->>>>>>> parent of 40b00c0... Added shooting motors to teleopmecanum
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -115,7 +109,6 @@ public class TeleOpMecanum extends LinearOpMode {
                 motorDisp.setPower(0);
             }
 
-<<<<<<< HEAD
             if (gamepad2.left_bumper){
                 motorShootOne.setPower(1.0);
                 motorShootTwo.setPower(1.0);
@@ -141,13 +134,12 @@ public class TeleOpMecanum extends LinearOpMode {
             //double newt = t + (Math.PI / 4); // adjust theta
             double processedX = Math.cos(t)*r;
             double processedY = Math.sin(t)*r; // back to cartesian
-//                                                                                                          Check how input is coming from controller; re implement newt
+// Check how input is coming from controller; re implement newt
 
 
 
             /*
-=======
->>>>>>> parent of 40b00c0... Added shooting motors to teleopmecanum
+
             drive	= -gamepad1.left_stick_y;
             strafe	= gamepad1.left_stick_x;
             rotate	= gamepad1.right_stick_x;
