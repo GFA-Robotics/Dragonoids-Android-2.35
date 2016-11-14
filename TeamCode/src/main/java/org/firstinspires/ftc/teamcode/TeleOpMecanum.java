@@ -56,6 +56,10 @@ public class TeleOpMecanum extends LinearOpMode {
     DcMotor motorShootTwo;
 
     Servo loader;
+<<<<<<< HEAD
+=======
+
+>>>>>>> Fix-Motor-Drive
     double drive;
     double strafe;
     double rotate;
@@ -83,7 +87,13 @@ public class TeleOpMecanum extends LinearOpMode {
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+<<<<<<< HEAD
         motorShootOne.setDirection(DcMotor.Direction.REVERSE);
+=======
+
+        motorShootOne.setDirection(DcMotor.Direction.REVERSE);
+
+>>>>>>> Fix-Motor-Drive
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -133,11 +143,15 @@ public class TeleOpMecanum extends LinearOpMode {
             //double newt = t + (Math.PI / 4); // adjust theta
             double processedX = Math.cos(t)*r;
             double processedY = Math.sin(t)*r; // back to cartesian
-//                                                                                                          Check how input is coming from controller; re implement newt
+// Check how input is coming from controller; re implement newt
 
 
 
             /*
+<<<<<<< HEAD
+=======
+
+>>>>>>> Fix-Motor-Drive
             drive	= -gamepad1.left_stick_y;
             strafe	= gamepad1.left_stick_x;
             rotate	= gamepad1.right_stick_x;
