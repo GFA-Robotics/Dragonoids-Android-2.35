@@ -18,10 +18,13 @@ public class DragonoidsAutoEncoder extends OpMode {
 
     final static int ENCODER_CPR = 1120;
     final static double WHEEL_CIRC = 4 * Math.PI;
-    final static int DISTANCE = 48;
+    // go forward 2 tiles
+    final static int TILE = 23;
 
-    final static double ROTATIONS = DISTANCE / WHEEL_CIRC;
-    final static double ENCODER_COUNTS = ENCODER_CPR * ROTATIONS;
+    final static double TILEROTATE = TILE / WHEEL_CIRC;
+    final static double INITDIST = ENCODER_CPR * TILEROTATE;
+
+
 
 
     public void init() {
@@ -30,8 +33,9 @@ public class DragonoidsAutoEncoder extends OpMode {
         motorLF = hardwareMap.dcMotor.get("left_drive_front");
         motorLB = hardwareMap.dcMotor.get("left_drive_back");
 
-        motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        //starts backwards and drives backwards
+        motorLF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motorLB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
         motorRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -41,20 +45,28 @@ public class DragonoidsAutoEncoder extends OpMode {
 
     public void start() {
 
-        motorRF.setTargetPosition((int) ENCODER_COUNTS);
-        motorRB.setTargetPosition((int) ENCODER_COUNTS);
-        motorLF.setTargetPosition((int) ENCODER_COUNTS);
-        motorLB.setTargetPosition((int) ENCODER_COUNTS);
+        //runs 1 tile forward
+        motorRF.setTargetPosition((int) INITDIST);
+        motorRB.setTargetPosition((int) INITDIST);
+        motorLF.setTargetPosition((int) INITDIST);
+        motorLB.setTargetPosition((int) INITDIST);
 
         motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        motorRF.setPower(0.5);
-        motorRB.setPower(0.5);
-        motorLF.setPower(0.5);
-        motorLB.setPower(0.5);
+        motorRF.setPower(0.75);
+        motorRB.setPower(0.75);
+        motorLF.setPower(0.75);
+        motorLB.setPower(0.75);
+/*
+        //strafes to the right
+        motorRF.setTargetPosition((int) STRAFDIST);
+        motorRB.setTargetPosition((int) STRAFDIST);
+        motorLF.setTargetPosition((int) STRAFDIST);
+        motorLB.setTargetPosition((int) STRAFDIST);
+        */
     }
 
     public void loop() {
