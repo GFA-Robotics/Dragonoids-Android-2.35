@@ -154,6 +154,27 @@ public class DragonoidsAutoEncoder extends LinearOpMode {
         sleep(Math.abs(totTime));
     }
 
+    public boolean detectColor () {
+
+        //false is red
+        color = false;
+        // convert the RGB values to HSV values.
+        Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
+
+        // send the info back to driver station using telemetry function.
+//            telemetry.addData("Clear", colorSensor.alpha());
+        telemetry.addData("Red  ", colorSensor.red());
+//            telemetry.addData("Green", colorSensor.green());
+        telemetry.addData("Blue ", colorSensor.blue());
+//            telemetry.addData("Hue", hsvValues[0]);
+
+        if (colorSensor.red()>colorSensor.blue()) {
+            color = false;
+        }
+        else {
+            color = true;
+        }
+
         telemetry.update();
         return color;
     }
