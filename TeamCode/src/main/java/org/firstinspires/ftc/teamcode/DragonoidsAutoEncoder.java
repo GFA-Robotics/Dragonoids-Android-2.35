@@ -62,8 +62,15 @@ public class DragonoidsAutoEncoder extends LinearOpMode {
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
+        resetEncoders();
+
+        // move to first beacon starting on leftmost side of starting tile
         forward(.75, .5, 500); // move forward to give us space to rotate
 
+        telemetry.addData("Distance Traveled: ", motorLF.getCurrentPosition() * (WHEEL_CIRC / ENCODER_CPR));
+        telemetry.update();
+
+    }
 
     public void resetEncoders() {
         motorRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -123,6 +130,16 @@ public class DragonoidsAutoEncoder extends LinearOpMode {
         sleep(Math.abs(totTime));
     }
 
+    public void strafe (double distance, double power, long totTime) {
+        resetEncoders();
+        distance = ENCODER_CPR * ROTATE * distance;
+
+        totTime = (long) (distance/power) + totTime;
+
+        motorRF.setTargetPosition((int) -distance);
+        motorRB.setTargetPosition((int) distance);
+        motorLF.setTargetPosition((int) distance);
+        motorLB.setTargetPosition((int) -distance);
 
         motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -138,5 +155,7 @@ public class DragonoidsAutoEncoder extends LinearOpMode {
     }
 
         telemetry.update();
+        return color;
     }
+
 }
