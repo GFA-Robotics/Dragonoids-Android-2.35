@@ -86,7 +86,7 @@ public class TeleOpMecanum extends LinearOpMode {
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
 
-        motorShootOne.setDirection(DcMotor.Direction.REVERSE);
+        motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -115,7 +115,11 @@ public class TeleOpMecanum extends LinearOpMode {
             if (gamepad2.left_bumper){
                 motorShootOne.setPower(1.0);
                 motorShootTwo.setPower(1.0);
-            } else {
+            } else if (gamepad2.right_bumper) {
+                motorShootOne.setPower(-1.0);
+                motorShootTwo.setPower(-1.0);
+            }
+            else {
                 motorShootOne.setPower(0);
                 motorShootTwo.setPower(0);
             }
