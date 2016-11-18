@@ -101,7 +101,7 @@ public class DragonoidsAuto extends LinearOpMode {
 
     public void turn (double distance, double power) {
         resetEncoders();
-        distance = ENCODER_CPR * ROTATE * distance * 1.5 / 180;
+        distance = ENCODER_CPR * ROTATE * distance * 2 / 180;
 
         motorRF.setTargetPosition((int) (distance));
         motorRB.setTargetPosition((int) (distance));
