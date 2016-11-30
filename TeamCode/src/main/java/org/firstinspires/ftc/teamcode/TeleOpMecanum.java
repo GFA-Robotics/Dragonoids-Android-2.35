@@ -107,7 +107,7 @@ public class TeleOpMecanum extends LinearOpMode {
 
 
             if (gamepad2.a) {
-                motorDisp.setPower(-.65);
+                motorDisp.setPower(-1.0);
             }
             else if(gamepad2.b) {
                 motorDisp.setPower(.45);
@@ -115,10 +115,10 @@ public class TeleOpMecanum extends LinearOpMode {
                 motorDisp.setPower(0);
             }
 
-            if (gamepad2.left_bumper){
+            if (gamepad2.right_bumper){
                 motorShootOne.setPower(1.0);
                 motorShootTwo.setPower(1.0);
-            } else if (gamepad2.right_bumper) {
+            } else if (gamepad2.left_bumper) {
                 motorShootOne.setPower(-1.0);
                 motorShootTwo.setPower(-1.0);
             }
