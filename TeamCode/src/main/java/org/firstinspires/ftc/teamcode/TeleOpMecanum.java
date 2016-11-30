@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -82,6 +83,8 @@ public class TeleOpMecanum extends LinearOpMode {
 
         loader = hardwareMap.servo.get("loader");
 
+        loader.setDirection(Servo.Direction.REVERSE);
+
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
@@ -124,9 +127,9 @@ public class TeleOpMecanum extends LinearOpMode {
                 motorShootTwo.setPower(0);
             }
 
-            if (gamepad2.right_bumper) {
-                loader.setPosition(.45);
-            } else {
+            if (gamepad2.right_trigger>0.25) {
+                loader.setPosition(.6);
+            } else{
                 loader.setPosition(0);
             }
 
@@ -138,12 +141,10 @@ public class TeleOpMecanum extends LinearOpMode {
             motorLB.setPower(Range.clip(drive - strafe + rotate, -1.0, 1.0));
             motorRF.setPower(Range.clip(drive - strafe - rotate, -1.0, 1.0));
             motorRB.setPower(Range.clip(drive + strafe - rotate, -1.0, 1.0));
-
-        //do u even hack
-            // no
         }
 
     }
+
     private float scaleInputOriginal(double dVal)  {
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
