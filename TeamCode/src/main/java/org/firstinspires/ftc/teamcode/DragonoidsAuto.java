@@ -29,7 +29,7 @@ public class DragonoidsAuto extends LinearOpMode {
     final static int ENCODER_CPR = 1120;
     final static double WHEEL_CIRC = 4 * Math.PI;
     // go forward 2 tiles
-    final static int TILE = 23;
+    final static int TILE = 24;
 
     final static double ROTATE = TILE / WHEEL_CIRC;
     final static double INITDIST = ENCODER_CPR * ROTATE;
@@ -101,7 +101,7 @@ public class DragonoidsAuto extends LinearOpMode {
 
     public void turn (double distance, double power) {
         resetEncoders();
-        distance = ENCODER_CPR * ROTATE * distance * 2 / 180;
+        distance = ENCODER_CPR / WHEEL_CIRC * Math.PI * 16 * distance / 180;
 
         motorRF.setTargetPosition((int) (distance));
         motorRB.setTargetPosition((int) (distance));
