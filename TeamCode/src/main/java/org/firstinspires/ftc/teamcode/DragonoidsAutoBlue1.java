@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="Blue Autonomous 1", group="Linear Opmode")
+@Autonomous(name="Blue Autonomous 1", group="Blue")
 public class DragonoidsAutoBlue1 extends DragonoidsAuto {
 
     @Override

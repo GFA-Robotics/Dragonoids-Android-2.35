@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by Dragonoids on 11/16/2016.
  */
 
-@Autonomous(name="Red Autonomous 1", group="Linear Opmode")
+@Autonomous(name="Red Autonomous 1", group="RED")
 public class DragonoidsAutoRed1 extends DragonoidsAuto{
 
 
