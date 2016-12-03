@@ -224,6 +224,14 @@ public class DragonoidsAuto extends LinearOpMode {
         motorShootTwo.setPower(0);
     }
 
+    public void buttonPress(boolean color) {
+        if (color == true) {
+            buttonPresser.setPosition(.4);
+        }
+        else {
+            buttonPresser.setPosition(.6);
+        }
+    }
 
     public boolean detectColor () {
 
