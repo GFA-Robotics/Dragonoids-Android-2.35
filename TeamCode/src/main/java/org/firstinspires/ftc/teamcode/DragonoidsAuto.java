@@ -29,6 +29,12 @@ public class DragonoidsAuto extends LinearOpMode {
     DcMotor motorLF;
     DcMotor motorLB;
 
+    DcMotor motorShootOne;
+    DcMotor motorShootTwo;
+
+    Servo loader;
+
+    Servo buttonPresser;
     ColorSensor colorSensor;
 
     ModernRoboticsI2cGyro gyro;
@@ -62,6 +68,16 @@ public class DragonoidsAuto extends LinearOpMode {
         motorRB = hardwareMap.dcMotor.get("right_drive_back");
         motorLF = hardwareMap.dcMotor.get("left_drive_front");
         motorLB = hardwareMap.dcMotor.get("left_drive_back");
+
+        motorShootOne = hardwareMap.dcMotor.get("shooterOne");
+        motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
+
+        motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
+
+        loader = hardwareMap.servo.get("loader");
+        buttonPresser = hardwareMap.servo.get("buttonPresser");
+
+        gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
 
         //starts backwards and drives backwards
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
