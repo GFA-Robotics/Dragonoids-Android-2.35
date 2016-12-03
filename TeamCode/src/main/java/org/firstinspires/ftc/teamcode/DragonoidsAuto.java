@@ -33,8 +33,8 @@ public class DragonoidsAuto extends LinearOpMode {
     DcMotor motorShootTwo;
 
     Servo loader;
-
     Servo buttonPresser;
+
     ColorSensor colorSensor;
 
     ModernRoboticsI2cGyro gyro;

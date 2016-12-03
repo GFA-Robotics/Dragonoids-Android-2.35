@@ -15,46 +15,49 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
         super.runOpMode();
         waitForStart();
 
-        forward(1, 1);
-        turn(-45, .75); // turn towards the beacon
-        forward(2.1, 1); // move towards the beacon
-        turn(135, .75); // turn so the back of the robot faces the beacon
+        //set presser in neutral pos
+        buttonPresser.setPosition(0);
 
-        forward(-.25, .5);
+        //get in position to shoot and shoot twice
+        forward(-.5,.75);
+        shoot();
 
-        if (detectColor() == true) { // if left light is wrong, adjust to hit other button
+        //move in pos to detect left light of first beacon
+        strafe(1,.75);
+        forward(-1.25,.75);
+        strafe(.66, .75);
 
-            strafe(-.37, .65); // move to second light
-            forward(-.1, .15); // bump into button
-        } else { // if light is correct color, no need to adjust
-
-            forward(-.1, .15); // bump into button
+        //detect color true is blue
+        if(detectColor() == true){
+            buttonPresser.setPosition(30);
+            sleep(250);
+            buttonPresser.setPosition(0);
         }
-
-        forward(1, .5); //move to second beacon from current position
-        turn(-90, .5);
-        forward(2, 1);
-        turn(90, .5);
-        forward(-.75, .5);
-        if (detectColor() == true) { // if left light is wrong, adjust to hit other button
-
-            strafe(-.37, .65); // move to second light
-            forward(-.1, .15); // bump into button
-        } else { // if light is correct color, no need to adjust
-
-            forward(-.1, .15); // bump into button
+        else{
+            buttonPresser.setPosition(-30);
+            sleep(250);
+            buttonPresser.setPosition(0);
         }
+        strafe(.33,.75);
 
-        //call to forward
-//        forward(1, .75);
+        //move in pos to detect left light of second beacon
+        strafe(-1,.75);
+        forward(-2,75);
+        strafe(.66,.75);
 
-
-        //call to turn between [-90, 90]
-//        turn(-90, .75);
-
-        //call to strafe
-//        strafe(1, .75);
-
+        //detect color true is blue
+        if(detectColor() == true){
+            buttonPresser.setPosition(30);
+            sleep(250);
+            buttonPresser.setPosition(0);
+        }
+        else{
+            buttonPresser.setPosition(-30);
+            sleep(250);
+            buttonPresser.setPosition(0);
+        }
+        strafe(.33,.75);
+        strafe(-1,.75);
 
         telemetry.addData("Distance Traveled: ", motorLF.getCurrentPosition() * (WHEEL_CIRC / ENCODER_CPR));
         telemetry.update();

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -19,9 +20,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class GyroTest extends LinearOpMode{
 
     ModernRoboticsI2cGyro gyro;
+    Servo buttonPresser;
 
     public void runOpMode() {
-
+        buttonPresser = hardwareMap.servo.get("buttonPresser");
         gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
         gyro.setHeadingMode(ModernRoboticsI2cGyro.HeadingMode.HEADING_CARTESIAN);
         gyro.calibrate();
@@ -35,8 +37,10 @@ public class GyroTest extends LinearOpMode{
             telemetry.addData("Raw Y", gyro.rawY());
             telemetry.addData("Raw Z", gyro.rawZ());
             telemetry.addData("Heading", gyro.getIntegratedZValue());
+            telemetry.addData("press", buttonPresser.getPosition());
 
             telemetry.update();
+
         }
     }
 }

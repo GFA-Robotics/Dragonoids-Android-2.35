@@ -16,12 +16,11 @@ public class Autotest extends DragonoidsAuto {
 
         resetEncoders();
 
-        //forward(-.5,.5);
-        //shoot();
-        turn(180,.5);
-        turn(-90,.5);
-        /*strafe(.5,.5);
-        strafe(-.5,.5);*/
+        forward(-.5,.5);
+        shoot();
+        sleep(2000);
+        strafe(-1.5,1);
+
 
     }
 
