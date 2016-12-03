@@ -153,10 +153,14 @@ public class TeleOpMecanum extends LinearOpMode {
             strafe	= gamepad1.left_stick_x;
             rotate	= gamepad1.right_stick_x;
 
-            motorLF.setPower(Range.clip(drive + strafe + rotate, -1.0, 1.0));
-            motorLB.setPower(Range.clip(drive - strafe + rotate, -1.0, 1.0));
-            motorRF.setPower(Range.clip(drive - strafe - rotate, -1.0, 1.0));
-            motorRB.setPower(Range.clip(drive + strafe - rotate, -1.0, 1.0));
+            motorLF.setPower(Range.clip(drive - strafe + rotate, -1.0, 1.0));
+            motorLB.setPower(Range.clip(drive + strafe + rotate, -1.0, 1.0));
+            motorRF.setPower(Range.clip(drive + strafe - rotate, -1.0, 1.0));
+            motorRB.setPower(Range.clip(drive - strafe - rotate, -1.0, 1.0));
+
+            telemetry.addData("Distance Traveled: ", motorLF.getCurrentPosition() * (WHEEL_CIRC / ENCODER_CPR));
+            telemetry.update();
+
         }
 
     }
