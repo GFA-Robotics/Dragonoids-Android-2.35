@@ -192,8 +192,12 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(0.75);
         motorLB.setPower(0.75);
 
-        while (Math.abs(motorRB.getCurrentPosition())<Math.abs(distance)) {
+        while (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
         }
+
+        stopMotors();
+
+    }
     }
 
     public boolean detectColor () {
