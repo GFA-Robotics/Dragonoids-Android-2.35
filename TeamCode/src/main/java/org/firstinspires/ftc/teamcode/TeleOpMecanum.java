@@ -57,6 +57,7 @@ public class TeleOpMecanum extends LinearOpMode {
     DcMotor motorShootTwo;
 
     Servo loader;
+    Servo buttonPresser;
 
     double drive;
     double strafe;
@@ -140,6 +141,12 @@ public class TeleOpMecanum extends LinearOpMode {
                 sleep(500);
                 loader.setPosition(.5);
             }
+
+            if (gamepad2.dpad_left == true) {
+                buttonPresser.setPosition(.3);
+            }
+            if (gamepad2.dpad_right == true) {
+                buttonPresser.setPosition(.7);
             }
 
             drive	= -gamepad1.left_stick_y;
