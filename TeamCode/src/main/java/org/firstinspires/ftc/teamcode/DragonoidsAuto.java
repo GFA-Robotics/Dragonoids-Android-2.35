@@ -128,7 +128,11 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
         while (Math.abs(motorRB.getCurrentPosition())<Math.abs(distance)) {
+        while (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
         }
+
+        stopMotors();
+
     }
 
     public void turn (double distance, double power) {
