@@ -91,6 +91,8 @@ public class DragonoidsAuto extends LinearOpMode {
         // changed the heading to signed heading [-360,360]
         gyro.setHeadingMode(ModernRoboticsI2cGyro.HeadingMode.HEADING_CARTESIAN);
 
+        buttonPresser.setPosition(.5);
+        loader.setPosition(.5);
     }
 
     public void resetEncoders() {
@@ -187,10 +189,10 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        motorRF.setPower(0.75);
-        motorRB.setPower(0.75);
-        motorLF.setPower(0.75);
-        motorLB.setPower(0.75);
+        motorRF.setPower(power);
+        motorRB.setPower(power);
+        motorLF.setPower(power);
+        motorLB.setPower(power);
 
         while (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
         }
@@ -201,6 +203,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
     public void shoot () {
 
+        loader.setPosition(.5);
+
         motorShootOne.setPower(1.0);
         motorShootTwo.setPower(1.0);
         sleep(500);
@@ -209,7 +213,7 @@ public class DragonoidsAuto extends LinearOpMode {
         sleep(500);
 
         loader.setPosition(.5);
-        sleep(1000);
+        sleep(2000);
 
         loader.setPosition(0);
         sleep(500);
