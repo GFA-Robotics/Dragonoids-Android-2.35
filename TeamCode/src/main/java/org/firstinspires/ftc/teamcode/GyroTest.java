@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -21,7 +22,8 @@ public class GyroTest extends LinearOpMode{
 
     public void runOpMode() {
 
-        GyroSensor gyro = hardwareMap.gyroSensor.get("gyro");
+        gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
+        gyro.setHeadingMode(ModernRoboticsI2cGyro.HeadingMode.HEADING_CARTESIAN);
         gyro.calibrate();
         while (!isStopRequested() && gyro.isCalibrating())  {
             sleep(50);
@@ -32,7 +34,7 @@ public class GyroTest extends LinearOpMode{
             telemetry.addData("Raw X", gyro.rawX());
             telemetry.addData("Raw Y", gyro.rawY());
             telemetry.addData("Raw Z", gyro.rawZ());
-            telemetry.addData("Heading", gyro.getHeading());
+            telemetry.addData("Heading", gyro.getIntegratedZValue());
 
             telemetry.update();
         }
