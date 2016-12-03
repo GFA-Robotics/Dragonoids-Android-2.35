@@ -62,6 +62,9 @@ public class TeleOpMecanum extends LinearOpMode {
     double strafe;
     double rotate;
 
+    final static int ENCODER_CPR = 1120;
+    final static double WHEEL_CIRC = 4 * Math.PI;
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -82,8 +85,7 @@ public class TeleOpMecanum extends LinearOpMode {
         motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
 
         loader = hardwareMap.servo.get("loader");
-
-        loader.setDirection(Servo.Direction.REVERSE);
+        buttonPresser = hardwareMap.servo.get("buttonPresser");
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -115,22 +117,20 @@ public class TeleOpMecanum extends LinearOpMode {
                 motorDisp.setPower(0);
             }
 
-            if (gamepad2.right_bumper){
+            if (gamepad2.left_bumper){
                 motorShootOne.setPower(1.0);
                 motorShootTwo.setPower(1.0);
-            } else if (gamepad2.left_bumper) {
-                motorShootOne.setPower(-1.0);
-                motorShootTwo.setPower(-1.0);
-            }
-            else {
+            } else {
                 motorShootOne.setPower(0);
                 motorShootTwo.setPower(0);
             }
 
-            if (gamepad2.right_trigger>0.25) {
-                loader.setPosition(.6);
-            } else{
+            if (gamepad2.right_bumper) {
                 loader.setPosition(0);
+            } else{
+                loader.setPosition(.5);
+            }
+
             }
 
             drive	= -gamepad1.left_stick_y;
