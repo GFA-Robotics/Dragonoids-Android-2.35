@@ -127,7 +127,6 @@ public class DragonoidsAuto extends LinearOpMode {
         motorRB.setPower(power);
         motorLF.setPower(power);
         motorLB.setPower(power);
-        while (Math.abs(motorRB.getCurrentPosition())<Math.abs(distance)) {
         while (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
         }
 
@@ -135,14 +134,18 @@ public class DragonoidsAuto extends LinearOpMode {
 
     }
 
-    public void turn (double distance, double power) {
+    public void turn (double angle, double power) {
         resetEncoders();
-        distance = ENCODER_CPR / WHEEL_CIRC * Math.PI * 16 * distance / 180;
+        gyro.resetZAxisIntegrator();
 
-        motorRF.setTargetPosition((int) (distance));
-        motorRB.setTargetPosition((int) (distance));
-        motorLF.setTargetPosition((int) (-distance));
-        motorLB.setTargetPosition((int) (-distance));
+//        double heading = gyro.getIntegratedZValue();
+        double distance = angle * (17.25);
+
+            motorRF.setTargetPosition((int) distance);
+            motorRB.setTargetPosition((int) distance);
+            motorLF.setTargetPosition((int) -distance);
+            motorLB.setTargetPosition((int) -distance);
+
 
         motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -154,8 +157,20 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
 
-        while (Math.abs(motorRB.getCurrentPosition())<Math.abs(distance)) {
+        while (Math.abs(gyro.getIntegratedZValue())<Math.abs(angle) || Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
+
+            if ((Math.abs(gyro.getIntegratedZValue()) >= Math.abs(angle))) {
+                stopMotors();
+                resetEncoders();
+            }
+
         }
+        stopMotors();
+        resetEncoders();
+
+        telemetry.addData("Angle achieved", gyro.getIntegratedZValue());
+        telemetry.update();
+
     }
 
     public void strafe (double distance, double power) {
