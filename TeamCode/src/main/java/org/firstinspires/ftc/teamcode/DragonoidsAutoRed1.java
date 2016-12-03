@@ -1,67 +1,51 @@
 package org.firstinspires.ftc.teamcode;
 
+/**
+ * Created by Dragonoids on 11/18/2016.
+ */
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-/**
- * Created by Dragonoids on 11/16/2016.
- */
-
-@Autonomous(name="Red Autonomous 1", group="RED")
-public class DragonoidsAutoRed1 extends DragonoidsAuto{
-
+@Autonomous(name="Red Autonomous 1", group="Red")
+public class DragonoidsAutoRed1 extends DragonoidsAuto {
 
     @Override
     public void runOpMode() throws InterruptedException {
         super.runOpMode();
         waitForStart();
 
-        forward(1, 1);
-        turn(45, .75); // turn towards the beacon
-        forward(2.1, 1); // move towards the beacon
-        turn(-135, .75); // turn so the back of the robot faces the beacon
+        //get in position to shoot and shoot twice
+        forward(-.5,.6);
+        shoot();
 
-        forward(-.25, .5);
+        //move in pos to detect left light of first beacon
+        strafe(-1,1);
+        forward(-1.35,.6);
+        turn(180,1);
+        strafe(1.66, 1);
 
-        if(detectColor()==true) { // if left light is wrong, adjust to hit other button
+        buttonPress(detectColor());
+        sleep(750);
+        strafe(.4,1);
+        sleep(1500);
+        strafe(-1,1);
+        buttonPresser.setPosition(.5);
 
-            strafe(.37, .65); // move to second light
-            forward(-.1, .15); // bump into button
-        }
-        else { // if light is correct color, no need to adjust
+        forward(2.15,.6);
+        strafe(-.8,1);
 
-            forward(-.1, .15); // bump into button
-        }
+        buttonPress(detectColor());
+        sleep(750);
+        strafe(-.3,1);
+        sleep(1500);
+        strafe(1,1);
+        buttonPresser.setPosition(.5);
 
-        forward(1, .5); //move to second beacon from current position
-        turn(90, .5);
-        forward(2, 1);
-        turn(-90, .5);
-        forward(-.75, .5);
-        if(detectColor()==true) { // if left light is wrong, adjust to hit other button
-
-            strafe(.37, .65); // move to second light
-            forward(-.1, .15); // bump into button
-        }
-        else { // if light is correct color, no need to adjust
-
-            forward(-.1, .15); // bump into button
-        }
-
-        //call to forward
-//        forward(1, .75);
-
-
-        //call to turn between [-90, 90]
-//        turn(-90, .75);
-
-        //call to strafe
-//        strafe(1, .75);
-
+        forward(-2,1);
 
         telemetry.addData("Distance Traveled: ", motorLF.getCurrentPosition() * (WHEEL_CIRC / ENCODER_CPR));
         telemetry.update();
-
 
 
     }

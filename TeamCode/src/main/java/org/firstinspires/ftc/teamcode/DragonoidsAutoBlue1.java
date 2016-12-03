@@ -15,49 +15,33 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
         super.runOpMode();
         waitForStart();
 
-        //set presser in neutral pos
-        buttonPresser.setPosition(0);
-
         //get in position to shoot and shoot twice
-        forward(-.5,.75);
+        forward(-.5,.6);
         shoot();
 
         //move in pos to detect left light of first beacon
         strafe(1,.75);
-        forward(-1.25,.75);
-        strafe(.66, .75);
+        forward(-1.35,.6);
+        strafe(1.66, .75);
 
-        //detect color true is blue
-        if(detectColor() == true){
-            buttonPresser.setPosition(30);
-            sleep(250);
-            buttonPresser.setPosition(0);
-        }
-        else{
-            buttonPresser.setPosition(-30);
-            sleep(250);
-            buttonPresser.setPosition(0);
-        }
-        strafe(.33,.75);
-
-        //move in pos to detect left light of second beacon
+        buttonPress(detectColor());
+        sleep(750);
+        strafe(.4,.75);
+        sleep(1500);
         strafe(-1,.75);
-        forward(-2,75);
-        strafe(.66,.75);
+        buttonPresser.setPosition(.5);
 
-        //detect color true is blue
-        if(detectColor() == true){
-            buttonPresser.setPosition(30);
-            sleep(250);
-            buttonPresser.setPosition(0);
-        }
-        else{
-            buttonPresser.setPosition(-30);
-            sleep(250);
-            buttonPresser.setPosition(0);
-        }
-        strafe(.33,.75);
+        forward(-2,.6);
+        strafe(.8,.75);
+
+        buttonPress(detectColor());
+        sleep(750);
+        strafe(.3,.75);
+        sleep(1500);
         strafe(-1,.75);
+        buttonPresser.setPosition(.5);
+
+        forward(2,1);
 
         telemetry.addData("Distance Traveled: ", motorLF.getCurrentPosition() * (WHEEL_CIRC / ENCODER_CPR));
         telemetry.update();
