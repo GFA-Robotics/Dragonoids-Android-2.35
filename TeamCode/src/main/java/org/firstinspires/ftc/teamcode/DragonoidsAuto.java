@@ -3,13 +3,18 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Color;
 import android.hardware.SensorEventListener;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static java.lang.Thread.sleep;
@@ -26,9 +31,13 @@ public class DragonoidsAuto extends LinearOpMode {
 
     ColorSensor colorSensor;
 
+    ModernRoboticsI2cGyro gyro;
+
+
+
     final static int ENCODER_CPR = 1120;
     final static double WHEEL_CIRC = 4 * Math.PI;
-    // go forward 2 tiles
+    // 1 tile length is 24 inches
     final static int TILE = 24;
 
     final static double ROTATE = TILE / WHEEL_CIRC;
@@ -46,7 +55,6 @@ public class DragonoidsAuto extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
 
-
         // get a reference to our ColorSensor object.
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
 
@@ -58,6 +66,14 @@ public class DragonoidsAuto extends LinearOpMode {
         //starts backwards and drives backwards
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+
+        gyro.calibrate();
+        while (gyro.isCalibrating()) {
+            sleep(1);
+        }
+
+        // changed the heading to signed heading [-360,360]
+        gyro.setHeadingMode(ModernRoboticsI2cGyro.HeadingMode.HEADING_CARTESIAN);
 
     }
 
