@@ -33,11 +33,15 @@ public class DragonoidsAuto extends LinearOpMode {
     DcMotor motorShootTwo;
 
     Servo loader;
+
     Servo buttonPresser;
 
     ColorSensor colorSensor;
 
     ModernRoboticsI2cGyro gyro;
+
+    private int currentAngle;
+    private int targetAngle = 0;
 
 
 
@@ -88,6 +92,8 @@ public class DragonoidsAuto extends LinearOpMode {
             sleep(1);
         }
 
+        currentAngle = gyro.getIntegratedZValue();
+
         // changed the heading to signed heading [-360,360]
         gyro.setHeadingMode(ModernRoboticsI2cGyro.HeadingMode.HEADING_CARTESIAN);
 
@@ -136,17 +142,19 @@ public class DragonoidsAuto extends LinearOpMode {
 
     }
 
-    public void turn (double angle, double power) {
+    public void turn (int angle, double power) {
         resetEncoders();
-        gyro.resetZAxisIntegrator();
+        currentAngle = gyro.getIntegratedZValue();
+
+        targetAngle = angle;
 
 //        double heading = gyro.getIntegratedZValue();
-        double distance = angle * (17.25);
+        double distance = angle * (18 + 2/3);
 
-            motorRF.setTargetPosition((int) distance);
-            motorRB.setTargetPosition((int) distance);
-            motorLF.setTargetPosition((int) -distance);
-            motorLB.setTargetPosition((int) -distance);
+        motorRF.setTargetPosition((int) distance);
+        motorRB.setTargetPosition((int) distance);
+        motorLF.setTargetPosition((int) -distance);
+        motorLB.setTargetPosition((int) -distance);
 
 
         motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -159,13 +167,7 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
 
-        while (Math.abs(gyro.getIntegratedZValue())<Math.abs(angle) || Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
-
-            if ((Math.abs(gyro.getIntegratedZValue()) >= Math.abs(angle))) {
-                stopMotors();
-                resetEncoders();
-            }
-
+        while (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
         }
         stopMotors();
         resetEncoders();
@@ -256,6 +258,18 @@ public class DragonoidsAuto extends LinearOpMode {
 
         telemetry.update();
         return color;
+    }
+
+    public void adjustHeading() {
+
+        currentAngle = gyro.getIntegratedZValue();
+
+
+        int adjustedAngle = targetAngle-currentAngle;
+
+        if(!(targetAngle == currentAngle)) {
+            turn(adjustedAngle, .25);
+        }
     }
 
 }
