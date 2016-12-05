@@ -229,11 +229,12 @@ public class DragonoidsAuto extends LinearOpMode {
 
     public void buttonPress(boolean color) {
         if (color == true) {
-            buttonPresser.setPosition(.4);
+            buttonPresser.setPosition(.9);
         }
         else {
-            buttonPresser.setPosition(.6);
+            buttonPresser.setPosition(.1);
         }
+        telemetry.addData("False is red: Blue is true:", color);
     }
 
     public boolean detectColor () {
