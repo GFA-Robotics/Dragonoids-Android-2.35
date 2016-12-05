@@ -142,11 +142,13 @@ public class TeleOpMecanum extends LinearOpMode {
                 loader.setPosition(.5);
             }
 
-            if (gamepad2.dpad_left == true) {
-                buttonPresser.setPosition(.3);
+            if (gamepad2.dpad_left) {
+                buttonPresser.setPosition(.1);
             }
-            if (gamepad2.dpad_right == true) {
-                buttonPresser.setPosition(.7);
+            else if (gamepad2.dpad_right) {
+                buttonPresser.setPosition(.9);
+            } else {
+                buttonPresser.setPosition(.5);
             }
 
             drive	= -gamepad1.left_stick_y;
