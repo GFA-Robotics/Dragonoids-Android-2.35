@@ -37,6 +37,7 @@ public class DragonoidsAuto extends LinearOpMode {
     Servo buttonPresser;
 
     ColorSensor colorSensor;
+    ColorSensor lineSensor;
 
     ModernRoboticsI2cGyro gyro;
 
@@ -64,6 +65,7 @@ public class DragonoidsAuto extends LinearOpMode {
 
         // get a reference to our ColorSensor object.
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        lineSensor = hardwareMap.colorSensor.get("lineSensor");
 
         motorRF = hardwareMap.dcMotor.get("right_drive_front");
         motorRB = hardwareMap.dcMotor.get("right_drive_back");
@@ -263,7 +265,7 @@ public class DragonoidsAuto extends LinearOpMode {
         int adjustedAngle = (targetAngle-currentAngle)%360;
 
         if (Math.abs(adjustedAngle)>180){
-            
+
         }
 
         if((targetAngle<0)) {
