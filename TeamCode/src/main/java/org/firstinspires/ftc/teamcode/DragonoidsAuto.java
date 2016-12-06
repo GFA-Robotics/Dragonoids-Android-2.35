@@ -142,7 +142,7 @@ public class DragonoidsAuto extends LinearOpMode {
         resetEncoders();
         currentAngle = gyro.getIntegratedZValue();
 
-        targetAngle = angle;
+        targetAngle += angle;
 
         double distance = angle * (18 + 2/3);
 
