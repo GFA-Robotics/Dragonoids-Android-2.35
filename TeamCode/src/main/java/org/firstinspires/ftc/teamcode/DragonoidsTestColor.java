@@ -44,11 +44,12 @@ public class DragonoidsTestColor extends LinearOpMode {
             Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
 
             // send the info back to driver station using telemetry function.
-//            telemetry.addData("Clear", colorSensor.alpha());
+            telemetry.addData("Clear", colorSensor.alpha());
             telemetry.addData("Red  ", colorSensor.red());
 //            telemetry.addData("Green", colorSensor.green());
             telemetry.addData("Blue ", colorSensor.blue());
 //            telemetry.addData("Hue", hsvValues[0]);
+
 
             telemetry.update();
         }
