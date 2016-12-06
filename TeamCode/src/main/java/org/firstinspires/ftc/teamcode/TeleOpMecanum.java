@@ -147,7 +147,8 @@ public class TeleOpMecanum extends LinearOpMode {
             }
             else if (gamepad2.dpad_right) {
                 buttonPresser.setPosition(.9);
-            } else {
+            }
+            else {
                 buttonPresser.setPosition(.5);
             }
 
