@@ -127,7 +127,7 @@ public class TeleOpMecanum extends LinearOpMode {
             }
 
             if (gamepad2.right_bumper) {
-                loader.setPosition(.2);
+                loader.setPosition(0);
             } else{
                 loader.setPosition(.5);
             }

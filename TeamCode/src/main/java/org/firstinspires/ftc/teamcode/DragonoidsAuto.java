@@ -262,44 +262,18 @@ public class DragonoidsAuto extends LinearOpMode {
         currentAngle = gyro.getIntegratedZValue();
 
 
-        int adjustedAngle = (targetAngle-currentAngle);
+        int adjustedAngle = (targetAngle-currentAngle)%360;
 
-        if ((adjustedAngle%360)<180){
-            if(adjustedAngle >=0){
-                adjustedAngle = adjustedAngle%360;
-            }
-            else if(adjustedAngle<0){
-                adjustedAngle = -(adjustedAngle%360);
-            }
-        }
-        else if((adjustedAngle%360)>180){
-            if(adjustedAngle >=0){
-                adjustedAngle = -((adjustedAngle%360)-180);
-            }
-            else if(adjustedAngle<0){
-                adjustedAngle = ((adjustedAngle%360)-180);
-            }
+        if (Math.abs(adjustedAngle)>180){
+
         }
 
-        if(targetAngle!=currentAngle) {
+        if((targetAngle<0)) {
             turn(adjustedAngle, .25);
         }
-    }
-
-    public boolean detectLine(){
-
-        boolean foundLine = false;
-
-        Color.RGBToHSV(lineSensor.red() * 8, lineSensor.green() * 8, lineSensor.blue() * 8, hsvValues);
-
-        if(/*(lineSensor.red() == lineSensor.green()&& lineSensor.blue() == lineSensor.red())||*/ lineSensor.alpha()>50){
-            foundLine = true;
+        else if((targetAngle>0)){
+            turn(-adjustedAngle, .25);
         }
-        else{
-            foundLine = false;
-        }
-
-        return foundLine;
     }
 
 }
