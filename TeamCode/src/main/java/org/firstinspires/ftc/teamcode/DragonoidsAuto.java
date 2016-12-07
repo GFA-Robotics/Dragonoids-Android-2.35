@@ -294,9 +294,9 @@ public class DragonoidsAuto extends LinearOpMode {
 
         boolean foundLine = false;
 
-        Color.RGBToHSV(lineSensor.red() * 8, lineSensor.green() * 8, lineSensor.blue() * 8, hsvValues);
+        /*Color.RGBToHSV(lineSensor.red() * 8, lineSensor.green() * 8, lineSensor.blue() * 8, hsvValues);
 
-        if(/*(lineSensor.red() == lineSensor.green()&& lineSensor.blue() == lineSensor.red())||*/ lineSensor.alpha()>50){
+        if((lineSensor.red() == lineSensor.green()&& lineSensor.blue() == lineSensor.red())|| lineSensor.alpha()>50){
             foundLine = true;
         }
         else{
