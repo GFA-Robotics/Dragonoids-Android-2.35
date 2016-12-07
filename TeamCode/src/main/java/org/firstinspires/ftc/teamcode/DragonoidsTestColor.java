@@ -15,12 +15,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 
 @Autonomous(name = "Dragonoids Color Test", group = "Sensor")
 public class DragonoidsTestColor extends LinearOpMode {
 
     ColorSensor colorSensor;
+    OpticalDistanceSensor whiteLineSensor;
 
     public void runOpMode() {
 
@@ -32,6 +34,7 @@ public class DragonoidsTestColor extends LinearOpMode {
 
         // get a reference to our ColorSensor object.
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        whiteLineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
 
         // wait for the start button to be pressed.
         waitForStart();
@@ -49,6 +52,8 @@ public class DragonoidsTestColor extends LinearOpMode {
 //            telemetry.addData("Green", colorSensor.green());
             telemetry.addData("Blue ", colorSensor.blue());
 //            telemetry.addData("Hue", hsvValues[0]);
+
+            telemetry.addData("Light Detected: ", whiteLineSensor.getLightDetected());
 
 
             telemetry.update();
