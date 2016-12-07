@@ -67,9 +67,9 @@ public class DragonoidsAuto extends LinearOpMode {
 
         // get a reference to our ColorSensor object.
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
-        lineSensor = hardwareMap.colorSensor.get("lineSensor");
+        lineSensor = hardwareMap.colorSensor.get("neutralSensor");
 
-        whiteLineSensor = hardwareMap.opticalDistanceSensor.get("line_sensor");
+        whiteLineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
 
         motorRF = hardwareMap.dcMotor.get("right_drive_front");
         motorRB = hardwareMap.dcMotor.get("right_drive_back");
