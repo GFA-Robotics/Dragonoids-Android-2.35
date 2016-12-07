@@ -301,6 +301,13 @@ public class DragonoidsAuto extends LinearOpMode {
         }
         else{
             foundLine = false;
+        }*/
+
+        if (whiteLineSensor.getLightDetected() <= 0.189){
+            foundLine = false;
+        }
+        else if (whiteLineSensor.getLightDetected() >= 0.190){
+            foundLine = true;
         }
 
         return foundLine;
