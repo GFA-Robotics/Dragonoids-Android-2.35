@@ -91,6 +91,10 @@ public class DragonoidsAuto extends LinearOpMode {
             sleep(1);
         }
 
+        gyro.resetZAxisIntegrator();
+
+        targetAngle = 0;
+
         currentAngle = gyro.getIntegratedZValue();
 
         // changed the heading to signed heading [-360,360]
@@ -261,25 +265,7 @@ public class DragonoidsAuto extends LinearOpMode {
 
         currentAngle = gyro.getIntegratedZValue();
 
-
         int adjustedAngle = (targetAngle-currentAngle);
-
-        if ((adjustedAngle%360)<180){
-            if(adjustedAngle >=0){
-                adjustedAngle = adjustedAngle%360;
-            }
-            else if(adjustedAngle<0){
-                adjustedAngle = -(adjustedAngle%360);
-            }
-        }
-        else if((adjustedAngle%360)>180){
-            if(adjustedAngle >=0){
-                adjustedAngle = -((adjustedAngle%360)-180);
-            }
-            else if(adjustedAngle<0){
-                adjustedAngle = ((adjustedAngle%360)-180);
-            }
-        }
 
         if(targetAngle!=currentAngle) {
             turn(adjustedAngle, .25);
