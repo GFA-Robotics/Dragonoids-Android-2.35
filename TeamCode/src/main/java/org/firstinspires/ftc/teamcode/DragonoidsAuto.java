@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -38,6 +39,7 @@ public class DragonoidsAuto extends LinearOpMode {
 
     ColorSensor colorSensor;
     ColorSensor lineSensor;
+    OpticalDistanceSensor whiteLineSensor;
 
     ModernRoboticsI2cGyro gyro;
 
@@ -66,6 +68,8 @@ public class DragonoidsAuto extends LinearOpMode {
         // get a reference to our ColorSensor object.
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
         lineSensor = hardwareMap.colorSensor.get("lineSensor");
+
+        whiteLineSensor = hardwareMap.opticalDistanceSensor.get("line_sensor");
 
         motorRF = hardwareMap.dcMotor.get("right_drive_front");
         motorRB = hardwareMap.dcMotor.get("right_drive_back");
