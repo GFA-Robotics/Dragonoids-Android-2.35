@@ -313,4 +313,10 @@ public class DragonoidsAuto extends LinearOpMode {
         return foundLine;
     }
 
+    public void moveToLine(){
+        while(detectLine()==false){
+            
+        }
+    }
+
 }
