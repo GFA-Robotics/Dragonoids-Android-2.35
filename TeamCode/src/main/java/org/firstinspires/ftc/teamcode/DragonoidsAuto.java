@@ -294,20 +294,20 @@ public class DragonoidsAuto extends LinearOpMode {
 
         boolean foundLine = false;
 
-        /*Color.RGBToHSV(lineSensor.red() * 8, lineSensor.green() * 8, lineSensor.blue() * 8, hsvValues);
+        Color.RGBToHSV(lineSensor.red() * 8, lineSensor.green() * 8, lineSensor.blue() * 8, hsvValues);
 
-        if((lineSensor.red() == lineSensor.green()&& lineSensor.blue() == lineSensor.red())|| lineSensor.alpha()>50){
-            foundLine = true;
-        }
-        else{
-            foundLine = false;
-        }*/
+        //make sure sensing a neutral color (not on the colored tape)
+        if(lineSensor.red() == lineSensor.green()&& lineSensor.blue() == lineSensor.red()){
 
-        if (whiteLineSensor.getLightDetected() <= 0.189){
-            foundLine = false;
-        }
-        else if (whiteLineSensor.getLightDetected() >= 0.190){
-            foundLine = true;
+            //light from darker block should be below certain threshold (0.189 is temporary value)
+            if (whiteLineSensor.getLightDetected() <= 0.189){
+                foundLine = false;
+            }
+
+            //light from white tape should be larger than grey, return on line
+            else if (whiteLineSensor.getLightDetected() >= 0.190){
+                foundLine = true;
+            }
         }
 
         return foundLine;
