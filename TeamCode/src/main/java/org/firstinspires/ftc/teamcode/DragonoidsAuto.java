@@ -38,8 +38,7 @@ public class DragonoidsAuto extends LinearOpMode {
     Servo buttonPresser;
 
     ColorSensor colorSensor;
-    ColorSensor lineSensor;
-    OpticalDistanceSensor whiteLineSensor;
+    OpticalDistanceSensor lineSensor;
 
     ModernRoboticsI2cGyro gyro;
 
@@ -67,9 +66,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
         // get a reference to our ColorSensor object.
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
-        lineSensor = hardwareMap.colorSensor.get("neutralSensor");
 
-        whiteLineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
+        lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
 
         motorRF = hardwareMap.dcMotor.get("right_drive_front");
         motorRB = hardwareMap.dcMotor.get("right_drive_back");
@@ -279,11 +277,6 @@ public class DragonoidsAuto extends LinearOpMode {
     public boolean detectLine(){
 
         boolean foundLine = false;
-
-        Color.RGBToHSV(lineSensor.red() * 8, lineSensor.green() * 8, lineSensor.blue() * 8, hsvValues);
-
-        //make sure sensing a neutral color (not on the colored tape)
-        if(lineSensor.red() == lineSensor.green()&& lineSensor.blue() == lineSensor.red()){
 
             //light from darker block should be below certain threshold (0.189 is temporary value)
             if (whiteLineSensor.getLightDetected() <= 0.189){
