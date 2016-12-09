@@ -280,6 +280,7 @@ public class DragonoidsAuto extends LinearOpMode {
 
             //light from darker block should be below certain threshold (0.189 is temporary value)
             if (whiteLineSensor.getLightDetected() <= 0.189){
+            if (lineSensor.getLightDetected() <= initLight+.4){
                 foundLine = false;
             }
 
@@ -287,14 +288,15 @@ public class DragonoidsAuto extends LinearOpMode {
             else if (whiteLineSensor.getLightDetected() >= 0.190){
                 foundLine = true;
             }
-        }
 
         return foundLine;
     }
 
-    public void moveToLine(){
-        while(detectLine()==false){
-            
+    public void alignLine() {
+
+        while(!detectLine()){
+            forward(-.04, .2);
+            sleep(50);
         }
     }
 
