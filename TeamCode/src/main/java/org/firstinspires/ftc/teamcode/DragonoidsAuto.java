@@ -45,6 +45,8 @@ public class DragonoidsAuto extends LinearOpMode {
     private int currentAngle;
     private int targetAngle = 0;
 
+    private double initLight;
+
 
 
     final static int ENCODER_CPR = 1120;
@@ -104,6 +106,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
         buttonPresser.setPosition(.5);
         loader.setPosition(.5);
+
+        initLight = lineSensor.getLightDetected();
     }
 
     public void resetEncoders() {
@@ -279,14 +283,15 @@ public class DragonoidsAuto extends LinearOpMode {
         boolean foundLine = false;
 
             //light from darker block should be below certain threshold (0.189 is temporary value)
-            if (whiteLineSensor.getLightDetected() <= 0.189){
             if (lineSensor.getLightDetected() <= initLight+.4){
                 foundLine = false;
             }
 
             //light from white tape should be larger than grey, return on line
-            else if (whiteLineSensor.getLightDetected() >= 0.190){
+            else if (lineSensor.getLightDetected() >= initLight+.4){
                 foundLine = true;
+                stopMotors();
+                resetEncoders();
             }
 
         return foundLine;
