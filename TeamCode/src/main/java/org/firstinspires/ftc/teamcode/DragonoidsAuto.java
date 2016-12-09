@@ -211,6 +211,49 @@ public class DragonoidsAuto extends LinearOpMode {
 
     }
 
+    public void rightDiagonal (double distance, double power) {
+        resetEncoders();
+
+        distance = ENCODER_CPR * ROTATE * distance * 2;
+
+
+            motorRF.setTargetPosition((int) distance);
+            motorLB.setTargetPosition((int) distance);
+
+
+        motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorLB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        motorRF.setPower(power);
+        motorLB.setPower(power);
+
+        while (Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
+                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance)) {
+        }
+
+        stopMotors();
+    }
+
+    public void leftDiagonal (double distance, double power) {
+        resetEncoders();
+
+        distance = ENCODER_CPR * ROTATE * distance * 2;
+
+        motorRB.setTargetPosition((int) distance);
+        motorLF.setTargetPosition((int) distance);
+
+        motorRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        motorRB.setPower(power);
+        motorLF.setPower(power);
+
+        while (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
+        }
+
+        stopMotors();
+    }
+
     public void shoot () {
 
         loader.setPosition(.5);
