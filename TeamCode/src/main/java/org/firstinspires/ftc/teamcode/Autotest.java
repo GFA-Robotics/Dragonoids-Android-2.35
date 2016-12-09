@@ -15,12 +15,11 @@ public class Autotest extends DragonoidsAuto {
         waitForStart();
 
         resetEncoders();
-
-        forward(-.5,.5);
-        shoot();
-        sleep(2000);
-        strafe(-1.5,1);
-
+        alignLine();
+        /*leftDiagonal(1,1);
+        leftDiagonal(-1,1);
+        rightDiagonal(1,1);
+        rightDiagonal(-1,1);*/
 
     }
 
