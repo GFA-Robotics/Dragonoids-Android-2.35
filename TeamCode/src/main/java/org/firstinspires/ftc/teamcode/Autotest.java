@@ -14,12 +14,20 @@ public class Autotest extends DragonoidsAuto {
         super.runOpMode();
         waitForStart();
 
-        resetEncoders();
+        //currently testing blue side full autonomous
+        forward(-.7,.6);
+        shoot();
+
+        rightDiagonal(-2,.75);
         alignLine();
-        /*leftDiagonal(1,1);
-        leftDiagonal(-1,1);
-        rightDiagonal(1,1);
-        rightDiagonal(-1,1);*/
+        strafe(-.3,.4);
+
+        adjustHeading();
+        //buttonPress(detectColor());
+        strafe(-.2,.2);
+
+
+
 
     }
 
