@@ -15,17 +15,46 @@ public class Autotest extends DragonoidsAuto {
         waitForStart();
 
         //currently testing blue side full autonomous
-        forward(-.7,.6);
+
         shoot();
+        forward(-.7, .6);
 
-        rightDiagonal(-2,.75);
-        alignLine();
-        strafe(-.3,.4);
-
+        strafe(.6, .75);
+        rightDiagonal(-2, .75);
+        adjustRange();
         adjustHeading();
+        alignLine(true);
+        if (detectColor()) {
+            strafe(.3,.5);
+        } else {
+            forward(-.15,.2);
+            strafe(.3,.5);
+        }
+        strafe(-.3,1);
+        forward(1.5,1);
+        alignLine(false);
+        if (detectColor()) {
+            strafe(.3,.5);
+        } else {
+            forward(-.15,.2);
+            strafe(.3,.5);
+        }
+        strafe(-.5,1);
+/*
+        //buttonPress(detectColor());
+        strafe(-.2,.2);
+        sleep(500);
+        strafe(.5,.5);
+        forward(-1.75,.75);
+        alignLine(true);
+        adjustHeading();
+        strafe(-.3,.5);
         //buttonPress(detectColor());
         strafe(-.2,.2);
 
+        leftDiagonal(2,.75);
+
+*/
 
 
 

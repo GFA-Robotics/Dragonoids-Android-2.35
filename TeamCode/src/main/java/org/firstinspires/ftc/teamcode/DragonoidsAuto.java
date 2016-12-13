@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.hardware.SensorEventListener;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -17,6 +18,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRRangeSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import static java.lang.Thread.sleep;
 
@@ -39,6 +43,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
     ColorSensor colorSensor;
     OpticalDistanceSensor lineSensor;
+
+    ModernRoboticsI2cRangeSensor rangeSensor;
 
     ModernRoboticsI2cGyro gyro;
 
@@ -85,6 +91,8 @@ public class DragonoidsAuto extends LinearOpMode {
         buttonPresser = hardwareMap.servo.get("buttonPresser");
 
         gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
+
+        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
 
         //starts backwards and drives backwards
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -331,7 +339,7 @@ public class DragonoidsAuto extends LinearOpMode {
             }
 
             //light from white tape should be larger than grey, return on line
-            else if (lineSensor.getLightDetected() >= initLight+.4){
+            else if (lineSensor.getLightDetected() >= initLight+.3){
                 foundLine = true;
                 stopMotors();
                 resetEncoders();
@@ -341,10 +349,14 @@ public class DragonoidsAuto extends LinearOpMode {
     }
 
     public void alignLine() {
+    public void adjustRange () {
+        double range = rangeSensor.getDistance(DistanceUnit.INCH);
+        if (range==9) {
+        } else if (range>9) {
+            strafe(((range-2)/24),.4);
+        } else if (range<9) {
+            strafe((-(range-2)/24),.4);
 
-        while(!detectLine()){
-            forward(-.04, .2);
-            sleep(50);
         }
     }
 
