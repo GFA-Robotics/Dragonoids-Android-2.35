@@ -334,7 +334,7 @@ public class DragonoidsAuto extends LinearOpMode {
         boolean foundLine = false;
 
             //light from darker block should be below certain threshold (0.189 is temporary value)
-            if (lineSensor.getLightDetected() <= initLight+.4){
+            if (lineSensor.getLightDetected() <= initLight+.3){
                 foundLine = false;
             }
 
@@ -348,7 +348,35 @@ public class DragonoidsAuto extends LinearOpMode {
         return foundLine;
     }
 
-    public void alignLine() {
+    public void alignLine(boolean value) {
+        if(value) {
+            while(!detectLine()){
+                motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                motorRF.setPower(-.1);
+                motorRB.setPower(-.1);
+                motorLF.setPower(-.1);
+                motorLB.setPower(-.1);
+
+            }
+        } else {
+            while(!detectLine()){
+                motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                motorRF.setPower(.1);
+                motorRB.setPower(.1);
+                motorLF.setPower(.1);
+                motorLB.setPower(.1);
+                }
+            }
+    }
+
     public void adjustRange () {
         double range = rangeSensor.getDistance(DistanceUnit.INCH);
         if (range==9) {
