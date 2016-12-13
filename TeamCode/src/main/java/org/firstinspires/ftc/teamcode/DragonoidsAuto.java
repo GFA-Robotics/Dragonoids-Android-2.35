@@ -272,7 +272,7 @@ public class DragonoidsAuto extends LinearOpMode {
         sleep(750);
 
         loader.setPosition(0);
-        sleep(500);
+        sleep(250);
 
         loader.setPosition(.5);
         sleep(2000);
@@ -325,7 +325,7 @@ public class DragonoidsAuto extends LinearOpMode {
         int adjustedAngle = (targetAngle-currentAngle);
 
         if(targetAngle!=currentAngle) {
-            turn(adjustedAngle, .25);
+            turn(adjustedAngle, .5);
         }
     }
 
