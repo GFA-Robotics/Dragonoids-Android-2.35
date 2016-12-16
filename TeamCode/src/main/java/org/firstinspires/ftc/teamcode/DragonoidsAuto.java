@@ -125,7 +125,7 @@ public class DragonoidsAuto extends LinearOpMode {
         rightLift.setPosition(1);
 
         initLight = lineSensor.getLightDetected();
-        
+
         telemetry.addData("Calibrated", targetAngle);
         telemetry.update();
     }
