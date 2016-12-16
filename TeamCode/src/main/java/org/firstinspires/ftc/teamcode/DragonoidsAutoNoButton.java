@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="Autonomous Shoot", group="Blue")
+@Autonomous(name="Shoot", group="")
 public class DragonoidsAutoNoButton extends DragonoidsAuto {
 
     @Override
@@ -16,12 +16,7 @@ public class DragonoidsAutoNoButton extends DragonoidsAuto {
         waitForStart();
 
         //get in position to shoot and shoot twice
-        forward(-.7,.6);
+        sleep(10000);
         shoot();
-
-        telemetry.addData("Distance Traveled: ", motorLF.getCurrentPosition() * (WHEEL_CIRC / ENCODER_CPR));
-        telemetry.update();
-
-
     }
 }
