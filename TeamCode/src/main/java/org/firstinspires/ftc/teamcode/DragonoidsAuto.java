@@ -54,7 +54,7 @@ public class DragonoidsAuto extends LinearOpMode {
     ModernRoboticsI2cGyro gyro;
 
     private int currentAngle;
-    private int targetAngle = 0;
+    public int targetAngle = 0;
 
     private double initLight;
 
@@ -279,14 +279,15 @@ public class DragonoidsAuto extends LinearOpMode {
         loader.setPosition(.5);
         sleep(500);
 
-        motorShootOne.setPower(1.0);
-        motorShootTwo.setPower(1.0);
+        motorShootOne.setPower(0.9);
+        motorShootTwo.setPower(0.9);
         sleep(750);
 
         loader.setPosition(0);
         sleep(250);
 
         loader.setPosition(.5);
+        forward(-.05,1);
         sleep(2000);
 
         loader.setPosition(0);
@@ -336,8 +337,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
         int adjustedAngle = (targetAngle-currentAngle);
 
-        if(targetAngle!=currentAngle) {
-            turn(adjustedAngle, .5);
+        if(!(currentAngle>-2 && currentAngle <2)) {
+            turn(adjustedAngle, 1);
         }
     }
 
@@ -368,12 +369,10 @@ public class DragonoidsAuto extends LinearOpMode {
                 motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                motorRF.setPower(-.1);
-                motorRB.setPower(-.1);
-                motorLF.setPower(-.1);
-                motorLB.setPower(-.1);
-
-            }
+                motorRF.setPower(-.15);
+                motorRB.setPower(-.15);
+                motorLF.setPower(-.15);
+                motorLB.setPower(-.15); }
         } else {
             while(!detectLine()){
                 motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -381,11 +380,10 @@ public class DragonoidsAuto extends LinearOpMode {
                 motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                motorRF.setPower(.1);
-                motorRB.setPower(.1);
-                motorLF.setPower(.1);
-                motorLB.setPower(.1);
-                }
+                motorRF.setPower(.15);
+                motorRB.setPower(.15);
+                motorLF.setPower(.15);
+                motorLB.setPower(.15); }
             }
     }
 
