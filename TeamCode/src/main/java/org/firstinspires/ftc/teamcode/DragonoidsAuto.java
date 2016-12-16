@@ -5,6 +5,7 @@ import android.hardware.SensorEventListener;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -17,6 +18,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRRangeSensor;
@@ -40,6 +42,9 @@ public class DragonoidsAuto extends LinearOpMode {
     Servo loader;
 
     Servo buttonPresser;
+
+    Servo leftLift;
+    Servo rightLift;
 
     ColorSensor colorSensor;
     OpticalDistanceSensor lineSensor;
@@ -88,7 +93,9 @@ public class DragonoidsAuto extends LinearOpMode {
         motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
 
         loader = hardwareMap.servo.get("loader");
-        buttonPresser = hardwareMap.servo.get("buttonPresser");
+
+        leftLift = hardwareMap.servo.get("leftLift");
+        rightLift = hardwareMap.servo.get("rightLift");
 
         gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
 
@@ -112,10 +119,15 @@ public class DragonoidsAuto extends LinearOpMode {
         // changed the heading to signed heading [-360,360]
         gyro.setHeadingMode(ModernRoboticsI2cGyro.HeadingMode.HEADING_CARTESIAN);
 
-        buttonPresser.setPosition(.5);
         loader.setPosition(.5);
 
+        leftLift.setPosition(1);
+        rightLift.setPosition(1);
+
         initLight = lineSensor.getLightDetected();
+        
+        telemetry.addData("Calibrated", targetAngle);
+        telemetry.update();
     }
 
     public void resetEncoders() {
@@ -378,14 +390,18 @@ public class DragonoidsAuto extends LinearOpMode {
     }
 
     public void adjustRange () {
-        double range = rangeSensor.getDistance(DistanceUnit.INCH);
-        if (range==9) {
+        double range = getRange();
+        if (range==5) {
         } else if (range>9) {
-            strafe(((range-2)/24),.4);
+            strafe(((range-6)/24),.75);
         } else if (range<9) {
-            strafe((-(range-2)/24),.4);
-
+            strafe(((10-range)/24),.75);
         }
+    }
+    public double getRange () {
+        double range = rangeSensor.getDistance(DistanceUnit.INCH);
+        sleep(250);
+        return range;
     }
 
 }
