@@ -15,43 +15,39 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
         super.runOpMode();
         waitForStart();
 
-        //get in position to shoot and shoot twice
-        forward(-.7,.6);
+        //currently testing blue side full autonomous
         shoot();
+        forward(-.5, 1);
 
-        //move in pos to detect left light of first beacon
-        strafe(1, .75);
-        forward(-1.45, .6);
-
-        strafe(1.85, .75);
+        turn(-25, 1);
+        forward(-2.4, 1);
+        turn(25,.5);
+        adjustRange();
+        adjustRange();
         adjustHeading();
-
-        sleep(750);
-        strafe(.7, .75);
-        buttonPress(detectColor());
-
-        sleep(750);
-        strafe(.2,.75);
-        sleep(750);
-        strafe(-1,.75);
-        buttonPresser.setPosition(.5);
-/*
-        forward(-2,.6);
-        strafe(.8,.75);
-
-        adjustHeading(gyro.getIntegratedZValue());
-        buttonPress(detectColor());
-        sleep(750);
-        strafe(.3,.75);
-        sleep(1500);
-        strafe(-1,.75);
-        buttonPresser.setPosition(.5);
-
-        forward(2,1);
-*/
-        telemetry.addData("Distance Traveled: ", motorLF.getCurrentPosition() * (WHEEL_CIRC / ENCODER_CPR));
-        telemetry.update();
-
-
+        alignLine(false);
+//        //false is red true is blue
+        if (detectColor()) {
+            strafe(.5, 1);
+        } else {
+            forward(.13,.4);
+            strafe(.5, 1);
+        }
+        strafe(-.85,1);
+        adjustHeading();
+        forward(-1.5, 1);
+        adjustRange();
+        adjustRange();
+        adjustHeading();
+        alignLine(true);
+        if (detectColor()) {
+            strafe(.5, 1);
+        } else {
+            forward(.13,.4);
+            strafe(.5, 1);
+        }
+        strafe(-1.25,1);
+        forward(.5,1);
+        turn(-90,1);
     }
 }
