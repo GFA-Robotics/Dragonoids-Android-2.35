@@ -51,17 +51,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeleOp Simple", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+@Disabled
 public class TeleOpMode_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
-    DcMotor motorRF = null;
-    DcMotor motorRB = null;
-    DcMotor motorLF = null;
-    DcMotor motorLB = null;
-
-    DcMotor motorDisp = null;
+    DcMotor motorL;
+    DcMotor motorR;
 
     @Override
     public void runOpMode() {
@@ -72,16 +68,12 @@ public class TeleOpMode_Linear extends LinearOpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the phone).
          */
-        motorRF = hardwareMap.dcMotor.get("right_drive_front");
-        motorRB = hardwareMap.dcMotor.get("right_drive_back");
-        motorLF = hardwareMap.dcMotor.get("left_drive_front");
-        motorLB = hardwareMap.dcMotor.get("left_drive_back");
+        motorL = hardwareMap.dcMotor.get("leftMotor");
+        motorR = hardwareMap.dcMotor.get("rightMotor");
 
         // eg: Set the drive motor directions:
         // "Reverse" the motor that runs backwards when connected directly to the battery
-        motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-
+        motorL.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -92,14 +84,9 @@ public class TeleOpMode_Linear extends LinearOpMode {
             telemetry.update();
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
-            motorRF.setPower(-gamepad1.right_stick_y);
-            motorRB.setPower(-gamepad1.right_stick_y);
-            motorLF.setPower(-gamepad1.left_stick_y);
-            motorLB.setPower(-gamepad1.left_stick_y);
+            motorL.setPower(gamepad1.left_stick_y);
+            motorR.setPower(gamepad1.right_stick_y);
 
-            if (gamepad1.right_bumper==true) {
-                motorDisp.setPower(.65);
-            }
 
         }
     }

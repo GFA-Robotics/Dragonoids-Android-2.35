@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Created by Dragonoids on 11/30/2016.
  */
 
-@TeleOp(name="Gyro Test", group="RED")
+@Disabled
 public class GyroTest extends LinearOpMode{
 
     ModernRoboticsI2cGyro gyro;

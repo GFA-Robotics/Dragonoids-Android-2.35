@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.qualcomm.ftcrobotcontroller.R;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -17,12 +18,15 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "Dragonoids Color Test", group = "Sensor")
+
+@Disabled
 public class DragonoidsTestColor extends LinearOpMode {
 
     ColorSensor colorSensor;
     OpticalDistanceSensor whiteLineSensor;
+    ModernRoboticsI2cRangeSensor rangeSensor;
 
     public void runOpMode() {
 
@@ -35,6 +39,7 @@ public class DragonoidsTestColor extends LinearOpMode {
         // get a reference to our ColorSensor object.
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
         whiteLineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
+        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
 
         // wait for the start button to be pressed.
         waitForStart();
@@ -55,7 +60,7 @@ public class DragonoidsTestColor extends LinearOpMode {
 
             telemetry.addData("Light Detected: ", whiteLineSensor.getLightDetected());
 
-
+            telemetry.addData("Distance from wall", rangeSensor.getDistance(DistanceUnit.INCH));
             telemetry.update();
         }
     }

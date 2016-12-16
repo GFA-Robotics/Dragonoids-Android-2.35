@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * Created by Dragonoids on 12/2/2016.
  */
 
-@Autonomous(name="Auto Test", group="")
+@Disabled
 public class Autotest extends DragonoidsAuto {
 
     @Override
@@ -15,48 +18,44 @@ public class Autotest extends DragonoidsAuto {
         waitForStart();
 
         //currently testing blue side full autonomous
-
         shoot();
-        forward(-.7, .6);
+        forward(-.5, 1);
 
-        strafe(.6, .75);
-        rightDiagonal(-2, .75);
+        turn(-120, 1);
+        forward(2.15, 1);
+        turn(-30, .5);
+        telemetry.addData("Gyro Heading", gyro.getIntegratedZValue());
+        telemetry.update();
+        targetAngle = -180;
+        adjustRange();
+        adjustRange();
         adjustRange();
         adjustHeading();
         alignLine(true);
-        if (detectColor()) {
-            strafe(.3,.5);
+//        //false is red true is blue
+        if (!detectColor()) {
+            strafe(.5, 1);
         } else {
-            forward(-.15,.2);
-            strafe(.3,.5);
+            forward(.13,.4);
+            strafe(.5, 1);
         }
-        strafe(-.3,1);
-        forward(1.5,1);
-        alignLine(false);
-        if (detectColor()) {
-            strafe(.3,.5);
-        } else {
-            forward(-.15,.2);
-            strafe(.3,.5);
-        }
-        strafe(-.5,1);
-/*
-        //buttonPress(detectColor());
-        strafe(-.2,.2);
-        sleep(500);
-        strafe(.5,.5);
-        forward(-1.75,.75);
-        alignLine(true);
+        strafe(-.8,1);
+        targetAngle = -180;
         adjustHeading();
-        strafe(-.3,.5);
-        //buttonPress(detectColor());
-        strafe(-.2,.2);
-
-        leftDiagonal(2,.75);
-
-*/
-
-
+        forward(1.5, 1);
+        adjustRange();
+        adjustRange();
+        adjustRange();
+        alignLine(false);
+        if (!detectColor()) {
+            strafe(.5, 1);
+        } else {
+            forward(.13,.4);
+            strafe(.5, 1);
+        }
+        strafe(-1.25,1);
+        forward(-.5,1);
+        turn(90,1);
 
     }
 
