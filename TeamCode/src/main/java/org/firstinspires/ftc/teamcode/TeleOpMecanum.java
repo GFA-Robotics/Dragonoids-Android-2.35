@@ -57,7 +57,6 @@ public class TeleOpMecanum extends LinearOpMode {
     DcMotor motorShootTwo;
 
     Servo loader;
-    Servo buttonPresser;
 
     double drive;
     double strafe;
@@ -85,8 +84,10 @@ public class TeleOpMecanum extends LinearOpMode {
         motorShootOne = hardwareMap.dcMotor.get("shooterOne");
         motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
 
+        motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         loader = hardwareMap.servo.get("loader");
-        buttonPresser = hardwareMap.servo.get("buttonPresser");
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -108,7 +109,7 @@ public class TeleOpMecanum extends LinearOpMode {
             telemetry.addData("leftBack", + motorLB.getPower());
 
 
-
+            //Run the collector
             if (gamepad2.a) {
                 motorDisp.setPower(-1.0);
             }
@@ -118,7 +119,10 @@ public class TeleOpMecanum extends LinearOpMode {
                 motorDisp.setPower(0);
             }
 
+            //Fire up the shoot motors
             if (gamepad2.left_bumper){
+                motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 motorShootOne.setPower(1.0);
                 motorShootTwo.setPower(1.0);
             } else {
@@ -126,12 +130,14 @@ public class TeleOpMecanum extends LinearOpMode {
                 motorShootTwo.setPower(0);
             }
 
+            //load a ball into the shooter
             if (gamepad2.right_bumper) {
                 loader.setPosition(.2);
             } else{
                 loader.setPosition(.5);
             }
 
+            //jiggle the ball
             if (gamepad2.y) {
                 loader.setPosition(.25);
                 sleep(500);
@@ -140,16 +146,6 @@ public class TeleOpMecanum extends LinearOpMode {
                 loader.setPosition(.25);
                 sleep(500);
                 loader.setPosition(.5);
-            }
-
-            if (gamepad2.dpad_left) {
-                buttonPresser.setPosition(.1);
-            }
-            else if (gamepad2.dpad_right) {
-                buttonPresser.setPosition(.9);
-            }
-            else {
-                buttonPresser.setPosition(.5);
             }
 
             drive	= -gamepad1.left_stick_y;
