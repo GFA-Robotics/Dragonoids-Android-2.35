@@ -329,9 +329,9 @@ public class DragonoidsAuto extends LinearOpMode {
 
         currentAngle = gyro.getIntegratedZValue();
 
-        int adjustedAngle = (targetAngle-currentAngle);
+        int adjustedAngle = (targetAngle - currentAngle);
 
-        if(!(currentAngle>-2 && currentAngle <2)) {
+        if (!(currentAngle > -7 && currentAngle < 7)) {
             turn(adjustedAngle, 1);
         }
     }
