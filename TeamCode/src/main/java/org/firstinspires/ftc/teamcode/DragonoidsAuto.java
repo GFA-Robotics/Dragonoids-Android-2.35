@@ -97,6 +97,8 @@ public class DragonoidsAuto extends LinearOpMode {
         leftLift = hardwareMap.servo.get("leftLift");
         rightLift = hardwareMap.servo.get("rightLift");
 
+        leftLift.setDirection(Servo.Direction.REVERSE);
+
         gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
 
         rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
@@ -123,6 +125,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
         leftLift.setPosition(1);
         rightLift.setPosition(1);
+        motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         initLight = lineSensor.getLightDetected();
 
@@ -162,8 +166,8 @@ public class DragonoidsAuto extends LinearOpMode {
         motorRB.setPower(power);
         motorLF.setPower(power);
         motorLB.setPower(power);
-        while (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
-                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
+        while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
+                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))) {
         }
 
         stopMotors();
@@ -194,8 +198,8 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
 
-        while (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
-                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
+        while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
+                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))) {
         }
         stopMotors();
 
@@ -223,8 +227,8 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
 
-        while (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
-                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)) {
+        while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
+                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))) {
         }
 
         stopMotors();
@@ -279,8 +283,8 @@ public class DragonoidsAuto extends LinearOpMode {
         loader.setPosition(.5);
         sleep(500);
 
-        motorShootOne.setPower(0.9);
-        motorShootTwo.setPower(0.9);
+        motorShootOne.setPower(1.0);
+        motorShootTwo.setPower(1.0);
         sleep(750);
 
         loader.setPosition(0);
@@ -297,16 +301,6 @@ public class DragonoidsAuto extends LinearOpMode {
 
         motorShootOne.setPower(0);
         motorShootTwo.setPower(0);
-    }
-
-    public void buttonPress(boolean color) {
-        if (color == true) {
-            buttonPresser.setPosition(.9);
-        }
-        else {
-            buttonPresser.setPosition(.1);
-        }
-        telemetry.addData("False is red: Blue is true:", color);
     }
 
     public boolean detectColor () {
