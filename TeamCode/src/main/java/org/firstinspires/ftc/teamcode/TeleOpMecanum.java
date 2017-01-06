@@ -58,6 +58,9 @@ public class TeleOpMecanum extends LinearOpMode {
 
     Servo loader;
 
+    Servo leftLift;
+    Servo rightLift;
+
     double drive;
     double strafe;
     double rotate;
@@ -88,6 +91,14 @@ public class TeleOpMecanum extends LinearOpMode {
         motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         loader = hardwareMap.servo.get("loader");
+
+        leftLift = hardwareMap.servo.get("leftLift");
+        rightLift = hardwareMap.servo.get("rightLift");
+
+        leftLift.setDirection(Servo.Direction.REVERSE);
+
+        leftLift.setPosition(1);
+        rightLift.setPosition(1);
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -121,8 +132,6 @@ public class TeleOpMecanum extends LinearOpMode {
 
             //Fire up the shoot motors
             if (gamepad2.left_bumper){
-                motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 motorShootOne.setPower(1.0);
                 motorShootTwo.setPower(1.0);
             } else {
@@ -146,6 +155,19 @@ public class TeleOpMecanum extends LinearOpMode {
                 loader.setPosition(.25);
                 sleep(500);
                 loader.setPosition(.5);
+            }
+            //deploy the cap ball lift
+            if (gamepad1.left_bumper) {
+                leftLift.setPosition(.4);
+                rightLift.setPosition(.4);
+            } //store the cap ball lift
+            else if (gamepad1.left_trigger>.2) {
+                leftLift.setPosition(1.0);
+                rightLift.setPosition(1.0);
+            } //execute order 66
+            else if (gamepad1.right_bumper) {
+                leftLift.setPosition(.66);
+                rightLift.setPosition(.66);
             }
 
             drive	= -gamepad1.left_stick_y;
