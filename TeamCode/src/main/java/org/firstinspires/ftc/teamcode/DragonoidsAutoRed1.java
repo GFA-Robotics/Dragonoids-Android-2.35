@@ -19,13 +19,11 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
         forward(-.5, 1);
 
         turn(-120, 1);
-        forward(2.15, 1);
+        forward(2.5, 1);
         turn(-30,.5);
         telemetry.addData("Gyro Heading", gyro.getIntegratedZValue());
         telemetry.update();
         targetAngle = -180;
-        adjustRange();
-        adjustRange();
         adjustRange();
         adjustHeading();
         alignLine(true);
@@ -40,8 +38,6 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
         targetAngle = -180;
         adjustHeading();
         forward(1.5, 1);
-        adjustRange();
-        adjustRange();
         adjustRange();
         alignLine(false);
         if (!detectColor()) {
