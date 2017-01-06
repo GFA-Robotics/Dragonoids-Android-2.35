@@ -333,6 +333,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
         if (!(currentAngle > -7 && currentAngle < 7)) {
             turn(adjustedAngle, 1);
+        } else {
+            return;
         }
     }
 
@@ -383,16 +385,30 @@ public class DragonoidsAuto extends LinearOpMode {
 
     public void adjustRange () {
         double range = getRange();
-        if (range==5) {
-        } else if (range>9) {
-            strafe(((range-6)/24),.75);
-        } else if (range<9) {
-            strafe(((10-range)/24),.75);
+        motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        if (range>9) {
+            while (getRange()>9) {
+                motorRF.setPower(-.35);
+                motorRB.setPower(.35);
+                motorLF.setPower(.35);
+                motorLB.setPower(-.35);
+            }
+        } else {
+                while (getRange()<9) {
+                    motorRF.setPower(.35);
+                    motorRB.setPower(-.35);
+                    motorLF.setPower(-.35);
+                    motorLB.setPower(.35);
+                }
         }
-    }
+        stopMotors();
+        }
     public double getRange () {
         double range = rangeSensor.getDistance(DistanceUnit.INCH);
-        sleep(250);
         return range;
     }
 
