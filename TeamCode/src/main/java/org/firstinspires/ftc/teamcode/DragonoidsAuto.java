@@ -333,8 +333,6 @@ public class DragonoidsAuto extends LinearOpMode {
 
         if (!(currentAngle > -7 && currentAngle < 7)) {
             turn(adjustedAngle, 1);
-        } else {
-            return;
         }
     }
 
@@ -390,20 +388,21 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        if (range>9) {
-            while (getRange()>9) {
+        if (range>7) {
+            while (getRange()>7) {
                 motorRF.setPower(-.35);
                 motorRB.setPower(.35);
                 motorLF.setPower(.35);
                 motorLB.setPower(-.35);
             }
-        } else {
-                while (getRange()<9) {
-                    motorRF.setPower(.35);
-                    motorRB.setPower(-.35);
-                    motorLF.setPower(-.35);
-                    motorLB.setPower(.35);
-                }
+        }
+        else {
+            while (getRange()<7) {
+                motorRF.setPower(.35);
+                motorRB.setPower(-.35);
+                motorLF.setPower(-.35);
+                motorLB.setPower(.35);
+            }
         }
         stopMotors();
         }
