@@ -36,7 +36,7 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
         }
         strafe(-.8,1);
         targetAngle = -180;
-        adjustHeading();
+       // adjustHeading();
         forward(1.5, 1);
         adjustRange();
         alignLine(false);
