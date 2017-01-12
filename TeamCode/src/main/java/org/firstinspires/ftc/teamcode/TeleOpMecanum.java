@@ -87,9 +87,6 @@ public class TeleOpMecanum extends LinearOpMode {
         motorShootOne = hardwareMap.dcMotor.get("shooterOne");
         motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
 
-        motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         loader = hardwareMap.servo.get("loader");
 
         leftLift = hardwareMap.servo.get("leftLift");
@@ -132,8 +129,12 @@ public class TeleOpMecanum extends LinearOpMode {
 
             //Fire up the shoot motors
             if (gamepad2.left_bumper){
-                motorShootOne.setPower(1.0);
-                motorShootTwo.setPower(1.0);
+
+                motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                motorShootOne.setPower(0.6);
+                motorShootTwo.setPower(0.6);
             } else {
                 motorShootOne.setPower(0);
                 motorShootTwo.setPower(0);
