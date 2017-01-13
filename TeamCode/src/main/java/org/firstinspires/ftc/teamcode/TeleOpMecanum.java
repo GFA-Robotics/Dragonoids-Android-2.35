@@ -148,16 +148,6 @@ public class TeleOpMecanum extends LinearOpMode {
                 loader.setPosition(.3);
             }
 
-            //jiggle the ball
-            if (gamepad2.y) {
-                loader.setPosition(.25);
-                sleep(500);
-                loader.setPosition(.5);
-                sleep(500);
-                loader.setPosition(.25);
-                sleep(500);
-                loader.setPosition(.5);
-            }
             //deploy the cap ball lift
             if (gamepad1.left_bumper) {
                 leftLift.setPosition(.4);
