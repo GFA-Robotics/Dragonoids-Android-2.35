@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.DragonoidsAuto;
 
-/**
- * Created by Dragonoids on 12/2/2016.
- */
-
-@Disabled
+@Autonomous(name="Auto Test Blue", group="Blue")
 public class Autotest extends DragonoidsAuto {
 
     @Override
@@ -17,47 +13,67 @@ public class Autotest extends DragonoidsAuto {
         super.runOpMode();
         waitForStart();
 
-        //currently testing blue side full autonomous
-        shoot();
-        forward(-.5, 1);
+        while (opModeIsActive()) {
+            //blue side full autonomous
+            forward(-.93,.6);
+            shoot();
+            forward(-.5,.6);
+            strafe(.5, .6);
+            sleep(250);
+            strafe(.25, .8);
+            rightDiagonal(-1.75, .75);
+            adjustHeading();
+            adjustRange();
+            alignLine(true);
+            if (detectColor()) {
+                strafe(.6, 1);
+            } else {
+                forward(.13, .4);
+                strafe(.6, 1);
+            }
+            strafe(-.5,1);
+            forward(-1.5,1);
+            adjustRange();
+            adjustHeading();
+            alignLine(false);
+            if (detectColor()) {
+                strafe(.5, 1);
+            } else {
+                forward(.13, .4);
+                strafe(.5, 1);
+            }
+            adjustRange();
+            rightDiagonal(-.4,.5);
 
-        turn(-120, 1);
-        forward(2.15, 1);
-        turn(-30, .5);
-        telemetry.addData("Gyro Heading", gyro.getIntegratedZValue());
-        telemetry.update();
-        targetAngle = -180;
-        adjustRange();
-        adjustRange();
-        adjustRange();
-        adjustHeading();
-        alignLine(true);
-//        //false is red true is blue
-        if (!detectColor()) {
-            strafe(.5, 1);
-        } else {
-            forward(.13,.4);
-            strafe(.5, 1);
+            /*
+            turn(-25);
+            forward(-2.5, 1);
+            turn(25);
+            adjustRange();
+            adjustHeading();
+            alignLine(false);
+            //false is red true is blue
+            if (detectColor()) {
+                strafe(.75, 1);
+            } else {
+                forward(.13, .4);
+                strafe(.75, 1);
+            }
+            strafe(-.85, 1);
+            adjustHeading();
+            forward(-1.5, 1);
+            adjustRange();
+            alignLine(true);
+            if (detectColor()) {
+                strafe(.75, 1);
+            } else {
+                forward(.13, .4);
+                strafe(.75, 1);
+            }
+            strafe(-.75, 1);
+            forward(.5, 1);
+            */
+            break;
         }
-        strafe(-.8,1);
-        targetAngle = -180;
-        adjustHeading();
-        forward(1.5, 1);
-        adjustRange();
-        adjustRange();
-        adjustRange();
-        alignLine(false);
-        if (!detectColor()) {
-            strafe(.5, 1);
-        } else {
-            forward(.13,.4);
-            strafe(.5, 1);
-        }
-        strafe(-1.25,1);
-        forward(-.5,1);
-        turn(90,1);
-
     }
-
-
 }
