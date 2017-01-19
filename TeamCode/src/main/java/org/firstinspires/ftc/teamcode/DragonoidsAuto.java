@@ -54,8 +54,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
     ModernRoboticsI2cGyro gyro;
 
-    private int adjustedAngle;
     public int targetAngle = 0;
+    private int adjustedAngle;
 
     private double initLight;
 
@@ -316,26 +316,23 @@ public class DragonoidsAuto extends LinearOpMode {
 
     public void shoot () {
 
-        loader.setPosition(0);
-        sleep(500);
-
-        motorShootOne.setPower(0.68);
-        motorShootTwo.setPower(0.68);
-        sleep(750);
-
-        loader.setPosition(0.5);
+        motorShootOne.setPower(0.9);
+        motorShootTwo.setPower(0.9);
         sleep(250);
 
         loader.setPosition(0);
-        forward(-.05,1);
-        sleep(2000);
+        sleep(1500);
 
-        loader.setPosition(0.5);
-        sleep(500);
+        loader.setPosition(.5);
+        sleep(250);
 
+        loader.setPosition(0);
+        sleep(1500);
 
         motorShootOne.setPower(0);
         motorShootTwo.setPower(0);
+
+        loader.setPosition(.5);
     }
 
     public boolean detectColor () {
