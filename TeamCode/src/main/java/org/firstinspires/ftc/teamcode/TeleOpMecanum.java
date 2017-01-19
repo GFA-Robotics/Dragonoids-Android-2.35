@@ -120,7 +120,7 @@ public class TeleOpMecanum extends LinearOpMode {
 
             //Run the collector
             if (gamepad2.a) {
-                motorDisp.setPower(-1.0);
+                motorDisp.setPower(-0.8);
             }
             else if(gamepad2.b) {
                 motorDisp.setPower(.45);
@@ -134,8 +134,8 @@ public class TeleOpMecanum extends LinearOpMode {
                 motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                motorShootOne.setPower(0.92);
-                motorShootTwo.setPower(0.92);
+                motorShootOne.setPower(.9);
+                motorShootTwo.setPower(.9);
             } else {
                 motorShootOne.setPower(0);
                 motorShootTwo.setPower(0);
@@ -145,7 +145,7 @@ public class TeleOpMecanum extends LinearOpMode {
             if (gamepad2.right_bumper) {
                 loader.setPosition(0);
             } else{
-                loader.setPosition(.3);
+                loader.setPosition(.5);
             }
 
             //deploy the cap ball lift
@@ -180,7 +180,7 @@ public class TeleOpMecanum extends LinearOpMode {
 
     private float scaleInputOriginal(double dVal)  {
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
-                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
+                0.30, 0.36, 0.45, 0.52, 0.60, 0.72, 0.85, 1.00, 1.00 };
 
         // get the corresponding index for the scaleInput array.
         int index = (int) (dVal * 16.0);
