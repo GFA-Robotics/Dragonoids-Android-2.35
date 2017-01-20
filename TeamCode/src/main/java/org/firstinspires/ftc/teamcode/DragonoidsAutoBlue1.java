@@ -20,9 +20,9 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
             shoot();
             forward(-.5, 1);
 
-            turn(-25, 1);
+            turn(-25);
             forward(-2.5, 1);
-            turn(25, .5);
+            turn(25);
             adjustRange();
             adjustHeading();
             alignLine(false);
