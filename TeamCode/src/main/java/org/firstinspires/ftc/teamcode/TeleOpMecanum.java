@@ -32,9 +32,12 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -61,6 +64,15 @@ public class TeleOpMecanum extends LinearOpMode {
     Servo leftLift;
     Servo rightLift;
 
+    ColorSensor colorSensor;
+    boolean color;
+
+    // hsvValues is an array that will hold the hue, saturation, and value information.
+    float hsvValues[] = {0F,0F,0F};
+
+    // values is a reference to the hsvValues array.
+    final float values[] = hsvValues;
+
     double drive;
     double strafe;
     double rotate;
@@ -72,6 +84,7 @@ public class TeleOpMecanum extends LinearOpMode {
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
 
         /* eg: Initialize the hardware variables. Note that the strings used here as parameters
          * to 'get' must correspond to the names assigned during the robot configuration
@@ -92,6 +105,8 @@ public class TeleOpMecanum extends LinearOpMode {
 
         leftLift = hardwareMap.servo.get("leftLift");
         rightLift = hardwareMap.servo.get("rightLift");
+
+        colorSensor = hardwareMap.colorSensor.get("sensor_color");
 
         leftLift.setDirection(Servo.Direction.REVERSE);
 
@@ -116,6 +131,7 @@ public class TeleOpMecanum extends LinearOpMode {
             telemetry.addData("leftFront", + motorLF.getPower());
             telemetry.addData("rightBack", + motorRB.getPower());
             telemetry.addData("leftBack", + motorLB.getPower());
+            detectColor();
 
 
             //Run the collector
@@ -215,5 +231,26 @@ public class TeleOpMecanum extends LinearOpMode {
         else {
             return magnitude;
         }
+    }
+    public boolean detectColor () {
+
+        //false is red
+        color = false;
+        // convert the RGB values to HSV values.
+        Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
+
+        // send the info back to driver station using telemetry function.
+        telemetry.addData("Red  ", colorSensor.red());
+        telemetry.addData("Blue ", colorSensor.blue());
+
+        if (colorSensor.red()>colorSensor.blue()) {
+            color = false;
+        }
+        else {
+            color = true;
+        }
+
+
+        return color;
     }
 }
