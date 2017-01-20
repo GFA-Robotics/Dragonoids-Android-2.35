@@ -51,6 +51,7 @@ public class TeleOpShitBot extends LinearOpMode {
 
 
     DcMotor motorShootOne;
+    DcMotor motorShootTwo;
 
 
     double drive;
@@ -75,10 +76,13 @@ public class TeleOpShitBot extends LinearOpMode {
         motorLB = hardwareMap.dcMotor.get("left_drive_back");
 
         motorShootOne = hardwareMap.dcMotor.get("shooterOne");
+        motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
 
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+
+        motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
 
 
 
@@ -99,23 +103,26 @@ public class TeleOpShitBot extends LinearOpMode {
             if (gamepad2.left_bumper){
 
                 motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
                 motorShootOne.setPower(0.9);
+                motorShootTwo.setPower(0.9);
 
             } else {
                 motorShootOne.setPower(0);
+                motorShootTwo.setPower(0);
 
             }
 
             drive	= -gamepad1.left_stick_y;
-            strafe	= gamepad1.left_stick_x;
+            //strafe	= gamepad1.left_stick_x;
             rotate	= gamepad1.right_stick_x;
 
-            motorLF.setPower(Range.clip(drive - strafe + rotate, -1.0, 1.0));
-            motorLB.setPower(Range.clip(drive + strafe + rotate, -1.0, 1.0));
-            motorRF.setPower(Range.clip(drive + strafe - rotate, -1.0, 1.0));
-            motorRB.setPower(Range.clip(drive - strafe - rotate, -1.0, 1.0));
+            motorLF.setPower(Range.clip(drive + rotate, -1.0, 1.0));
+            motorLB.setPower(Range.clip(drive + rotate, -1.0, 1.0));
+            motorRF.setPower(Range.clip(drive - rotate, -1.0, 1.0));
+            motorRB.setPower(Range.clip(drive - rotate, -1.0, 1.0));
 
             telemetry.addData("Distance Traveled: ", motorLF.getCurrentPosition() * (WHEEL_CIRC / ENCODER_CPR));
             telemetry.update();
