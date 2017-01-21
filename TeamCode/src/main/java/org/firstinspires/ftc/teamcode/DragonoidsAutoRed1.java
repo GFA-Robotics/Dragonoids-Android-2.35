@@ -48,7 +48,6 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
             }
             adjustRange();
             turn(0);
-            leftDiagonal(-.4,.5);
 
             break;
         }
