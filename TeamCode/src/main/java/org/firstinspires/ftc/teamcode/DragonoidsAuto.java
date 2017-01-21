@@ -320,14 +320,14 @@ public class DragonoidsAuto extends LinearOpMode {
         motorShootTwo.setPower(0.9);
         sleep(250);
 
-        loader.setPosition(0);
-        sleep(1500);
+        loader.setPosition(.3);
+        sleep(500);
 
         loader.setPosition(.5);
-        sleep(250);
+        sleep(750);
 
-        loader.setPosition(0);
-        sleep(1500);
+        loader.setPosition(.3);
+        sleep(500);
 
         motorShootOne.setPower(0);
         motorShootTwo.setPower(0);
@@ -433,7 +433,7 @@ public class DragonoidsAuto extends LinearOpMode {
             }
         }
         else {
-            while (opModeIsActive()&&(getRange()<7)){
+            while (opModeIsActive()&&(getRange()<5)){
                 motorRF.setPower(.35);
                 motorRB.setPower(-.35);
                 motorLF.setPower(-.35);
