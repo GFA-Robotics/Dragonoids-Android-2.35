@@ -21,7 +21,7 @@ public class Autotest extends DragonoidsAuto {
             strafe(.5, .6);
             sleep(250);
             strafe(.25, .8);
-            rightDiagonal(-1.75, .75);
+            rightDiagonal(-1.4, .75);
             adjustHeading();
             adjustRange();
             alignLine(true);
@@ -32,7 +32,7 @@ public class Autotest extends DragonoidsAuto {
                 strafe(.6, 1);
             }
             strafe(-.5,1);
-            forward(-1.5,1);
+            forward(1.5,1);
             adjustRange();
             adjustHeading();
             alignLine(false);
@@ -43,37 +43,7 @@ public class Autotest extends DragonoidsAuto {
                 strafe(.5, 1);
             }
             adjustRange();
-            rightDiagonal(-.4,.5);
-
-            /*
-            turn(-25);
-            forward(-2.5, 1);
-            turn(25);
-            adjustRange();
-            adjustHeading();
-            alignLine(false);
-            //false is red true is blue
-            if (detectColor()) {
-                strafe(.75, 1);
-            } else {
-                forward(.13, .4);
-                strafe(.75, 1);
-            }
-            strafe(-.85, 1);
-            adjustHeading();
-            forward(-1.5, 1);
-            adjustRange();
-            alignLine(true);
-            if (detectColor()) {
-                strafe(.75, 1);
-            } else {
-                forward(.13, .4);
-                strafe(.75, 1);
-            }
-            strafe(-.75, 1);
-            forward(.5, 1);
-            */
             break;
-        }
+       }
     }
 }
