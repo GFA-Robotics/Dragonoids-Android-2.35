@@ -101,7 +101,7 @@ public class TeleOpMecanum extends LinearOpMode {
         motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
 
         loader = hardwareMap.servo.get("loader");
-        loader.setPosition(.3);
+        loader.setPosition(.5);
 
         leftLift = hardwareMap.servo.get("leftLift");
         rightLift = hardwareMap.servo.get("rightLift");
@@ -159,7 +159,7 @@ public class TeleOpMecanum extends LinearOpMode {
 
             //load a ball into the shooter
             if (gamepad2.right_bumper) {
-                loader.setPosition(0);
+                loader.setPosition(0.3);
             } else{
                 loader.setPosition(.5);
             }
