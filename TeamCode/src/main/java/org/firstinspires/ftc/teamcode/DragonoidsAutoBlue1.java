@@ -39,10 +39,10 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
             adjustHeading();
             alignLine(false);
             if (detectColor()) {
-                strafe(.5, 1);
+                strafe(.6, 1);
             } else {
                 forward(.13, .4);
-                strafe(.5, 1);
+                strafe(.6, 1);
             }
             adjustRange();
             break;

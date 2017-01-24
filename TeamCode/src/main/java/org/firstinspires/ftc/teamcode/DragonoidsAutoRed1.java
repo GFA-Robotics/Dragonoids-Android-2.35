@@ -41,13 +41,13 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
             adjustHeading();
             alignLine(true);
             if (!detectColor()) {
-                strafe(.5, 1);
+                strafe(.6, 1);
             } else {
                 forward(.13, .4);
-                strafe(.5, 1);
+                strafe(.6, 1);
             }
             adjustRange();
-            turn(0);
+            //turn(0);
 
             break;
         }
