@@ -150,8 +150,8 @@ public class TeleOpMecanum extends LinearOpMode {
                 motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                motorShootOne.setPower(.9);
-                motorShootTwo.setPower(.9);
+                motorShootOne.setPower(.75);
+                motorShootTwo.setPower(.75);
             } else {
                 motorShootOne.setPower(0);
                 motorShootTwo.setPower(0);
