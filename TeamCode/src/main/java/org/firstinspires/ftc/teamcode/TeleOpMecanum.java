@@ -80,6 +80,14 @@ public class TeleOpMecanum extends LinearOpMode {
     final static int ENCODER_CPR = 1120;
     final static double WHEEL_CIRC = 4 * Math.PI;
 
+    double fVelocity;
+
+    long fVelocityTime;
+    long fLastVelocityTime;
+
+    int fEncoder;
+    int fLastEncoder;
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -99,6 +107,9 @@ public class TeleOpMecanum extends LinearOpMode {
 
         motorShootOne = hardwareMap.dcMotor.get("shooterOne");
         motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
+
+        motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         loader = hardwareMap.servo.get("loader");
         loader.setPosition(.5);
@@ -146,12 +157,7 @@ public class TeleOpMecanum extends LinearOpMode {
 
             //Fire up the shoot motors
             if (gamepad2.left_bumper){
-
-                motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-                motorShootOne.setPower(.75);
-                motorShootTwo.setPower(.75);
+                bangBang();
             } else {
                 motorShootOne.setPower(0);
                 motorShootTwo.setPower(0);
@@ -252,5 +258,22 @@ public class TeleOpMecanum extends LinearOpMode {
 
 
         return color;
+    }
+    public void bangBang () {
+        fVelocityTime = System.nanoTime();
+
+        fEncoder = motorShootOne.getCurrentPosition();
+
+        fVelocity = (double) (fEncoder - fLastEncoder) / (fVelocityTime - fLastVelocityTime);
+
+        if (fVelocity >= .78) {
+            motorShootOne.setPower(.72);
+            motorShootTwo.setPower(.72);
+        } else if (fVelocity < .78) {
+            motorShootOne.setPower(.78);
+            motorShootTwo.setPower(.78);
+        }
+        fLastEncoder = fEncoder;
+        fLastVelocityTime = fVelocityTime;
     }
 }
