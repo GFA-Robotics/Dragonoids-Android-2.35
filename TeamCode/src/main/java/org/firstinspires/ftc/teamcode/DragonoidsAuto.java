@@ -412,7 +412,7 @@ public class DragonoidsAuto extends LinearOpMode {
                 motorLB.setPower(-.15); }
         } else {
             while(!detectLine() && opModeIsActive()){
-                
+
                 motorRF.setPower(.15);
                 motorRB.setPower(.15);
                 motorLF.setPower(.15);

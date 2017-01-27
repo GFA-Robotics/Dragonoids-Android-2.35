@@ -155,7 +155,7 @@ public class TeleOpMecanumOriginal extends LinearOpMode {
 
             //Fire up the shoot motors
             if (gamepad2.left_bumper){
-                bangBang();
+                shoot();
             } else {
                 motorShootOne.setPower(0);
                 motorShootTwo.setPower(0);
@@ -291,7 +291,7 @@ public class TeleOpMecanumOriginal extends LinearOpMode {
 
         return color;
     }
-    public void bangBang () {
+    public void shoot () {
         fVelocityTime = System.nanoTime();
 
         fEncoder = motorShootOne.getCurrentPosition();
