@@ -372,6 +372,10 @@ public class DragonoidsAuto extends LinearOpMode {
         targetAngle = prevTargetAngle;
     }
 
+    public void adjustHeadingSensor() {
+
+    }
+
     public boolean detectLine(){
 
         boolean foundLine = false;
@@ -408,7 +412,7 @@ public class DragonoidsAuto extends LinearOpMode {
                 motorLB.setPower(-.15); }
         } else {
             while(!detectLine() && opModeIsActive()){
-
+                
                 motorRF.setPower(.15);
                 motorRB.setPower(.15);
                 motorLF.setPower(.15);
@@ -416,6 +420,7 @@ public class DragonoidsAuto extends LinearOpMode {
             }
         stopMotors();
     }
+
 
     public void adjustRange () {
         double range = getRange();

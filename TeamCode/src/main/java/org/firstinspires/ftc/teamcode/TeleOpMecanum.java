@@ -184,9 +184,9 @@ public class TeleOpMecanum extends LinearOpMode {
                 rightLift.setPosition(.66);
             }
 
-            drive	= -gamepad1.left_stick_y;
-            strafe	= gamepad1.left_stick_x;
-            rotate	= gamepad1.right_stick_x;
+            drive	= -scaleInputOriginal(gamepad1.left_stick_y);
+            strafe	= scaleInputOriginal(gamepad1.left_stick_x);
+            rotate	= scaleInputOriginal(gamepad1.right_stick_x);
 
             motorLF.setPower(Range.clip(drive - strafe + rotate, -1.0, 1.0));
             motorLB.setPower(Range.clip(drive + strafe + rotate, -1.0, 1.0));
@@ -266,12 +266,12 @@ public class TeleOpMecanum extends LinearOpMode {
 
         fVelocity = (double) (fEncoder - fLastEncoder) / (fVelocityTime - fLastVelocityTime);
 
-        if (fVelocity >= .78) {
-            motorShootOne.setPower(.72);
-            motorShootTwo.setPower(.72);
-        } else if (fVelocity < .78) {
-            motorShootOne.setPower(.78);
-            motorShootTwo.setPower(.78);
+        if (fVelocity >= .92) {
+            motorShootOne.setPower(.88);
+            motorShootTwo.setPower(.88);
+        } else if (fVelocity < .92) {
+            motorShootOne.setPower(.92);
+            motorShootTwo.setPower(.92);
         }
         fLastEncoder = fEncoder;
         fLastVelocityTime = fVelocityTime;
