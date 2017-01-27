@@ -215,18 +215,26 @@ public class TeleOpMecanumOriginal extends LinearOpMode {
         // we're going to convert to polar, add pi/4 to theta, and convert back to cartesian.
         double r = Math.sqrt(Math.pow(input[0], 2) + Math.pow(input[1], 2));
         //because we treat positive y as 0, we adjust pi/2 to be 0, then add pi/4 to convert values to cardinal direction model
-        double t = (3*Math.PI / 4);
+        double t = (Math.PI/2);
         if(input[0] != 0.0) {
-            t += Math.atan(input[1] / input[0]); // over to polar
+            t = Math.atan(input[1] / input[0]); // over to polar
+        } else if(input[1] < 0) {
+            t = 3*(Math.PI/4);
         }
 
-        double processedX = Math.cos(t)*r;
-        double processedY = Math.sin(t)*r; // back to cartesian
+        if(input[0] > 0) {
+            t += Math.PI;
+        }
 
-        telemetry.addData("T: ", t);
-        telemetry.addData("R: ", r);
-        telemetry.addData("X: ", processedX);
-        telemetry.addData("Y: ", processedY);
+        double processedX = Math.cos(t + Math.PI/4)*r;
+        double processedY = Math.sin(t + Math.PI/4)*r; // back to cartesian, but added pi/4 to theta
+
+        telemetry.addData("orig X: ", input[0]);
+        telemetry.addData("orig Y: ", input[1]);
+        telemetry.addData("theta: ", t);
+        telemetry.addData("radius: ", r);
+        telemetry.addData("processed X: ", processedX);
+        telemetry.addData("processed Y: ", processedY);
         telemetry.update();
         return new float[] {(float)processedX, (float)processedY};
 
