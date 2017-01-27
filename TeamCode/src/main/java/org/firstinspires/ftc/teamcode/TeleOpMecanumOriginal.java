@@ -211,6 +211,27 @@ public class TeleOpMecanumOriginal extends LinearOpMode {
         motorLB.setPower(LB);
     }
 
+    private float[] processInput(float[] input) {
+        // we're going to convert to polar, add pi/4 to theta, and convert back to cartesian.
+        double r = Math.sqrt(Math.pow(input[0], 2) + Math.pow(input[1], 2));
+        //because we treat positive y as 0, we adjust pi/2 to be 0, then add pi/4 to convert values to cardinal direction model
+        double t = (3*Math.PI / 4);
+        if(input[0] != 0.0) {
+            t += Math.atan(input[1] / input[0]); // over to polar
+        }
+
+        double processedX = Math.cos(t)*r;
+        double processedY = Math.sin(t)*r; // back to cartesian
+
+        telemetry.addData("T: ", t);
+        telemetry.addData("R: ", r);
+        telemetry.addData("X: ", processedX);
+        telemetry.addData("Y: ", processedY);
+        telemetry.update();
+        return new float[] {(float)processedX, (float)processedY};
+
+    }
+
     private float scaleInputOriginal(double dVal)  {
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.45, 0.52, 0.60, 0.72, 0.85, 1.00, 1.00 };
