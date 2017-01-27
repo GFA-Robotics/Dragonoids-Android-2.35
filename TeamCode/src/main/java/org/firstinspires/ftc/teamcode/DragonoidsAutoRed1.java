@@ -36,6 +36,7 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
                 strafe(.6, 1);
             }
             strafe(-.5,1);
+            adjustHeading();
             forward(-1.5,1);
             adjustRange();
             adjustHeading();
