@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="Blue Autonomous Button", group="Blue")
 public class DragonoidsAutoBlue1 extends DragonoidsAuto {
-
+//Auto Blue 1 is a BLUE Side autonomous from Position 1 that performs: SHOOT, CAP BALL MOVE, 2 BEACON CLAIMS
     @Override
     public void runOpMode() throws InterruptedException {
         super.runOpMode();
@@ -17,9 +17,9 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
 
         while (opModeIsActive()) {
             //blue side full autonomous
-            forward(-.93,.6);
+            forward(-.75,.6);
             shoot();
-            forward(-.5,.6);
+            forward(-.7,.6);
             strafe(.5, .6);
             sleep(250);
             strafe(.25, .8);
@@ -28,18 +28,19 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
             adjustRange();
             alignLine(true);
             if (detectColor()) {
+                forward(-.05,.5);
                 strafe(.6, 1);
             } else {
                 forward(.13, .4);
                 strafe(.6, 1);
             }
-            strafe(-.5,1);
-            adjustHeading();
+            strafe(-.65,1);
             forward(1.5,1);
             adjustRange();
             adjustHeading();
             alignLine(false);
             if (detectColor()) {
+                forward(-.05,.5);
                 strafe(.6, 1);
             } else {
                 forward(.13, .4);
