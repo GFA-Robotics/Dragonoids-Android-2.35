@@ -55,6 +55,7 @@ public class TeleOpMecanum extends LinearOpMode {
     DcMotor motorLB;
 
     DcMotor motorDisp;
+    DcMotor motorLift;
 
     DcMotor motorShootOne;
     DcMotor motorShootTwo;
@@ -80,6 +81,8 @@ public class TeleOpMecanum extends LinearOpMode {
     final static int ENCODER_CPR = 1120;
     final static double WHEEL_CIRC = 4 * Math.PI;
 
+    boolean lifted = false;
+
     double fVelocity;
 
     long fVelocityTime;
@@ -104,6 +107,7 @@ public class TeleOpMecanum extends LinearOpMode {
         motorLB = hardwareMap.dcMotor.get("left_drive_back");
 
         motorDisp = hardwareMap.dcMotor.get("collector");
+        motorLift = hardwareMap.dcMotor.get("lift");
 
         motorShootOne = hardwareMap.dcMotor.get("shooterOne");
         motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
@@ -157,20 +161,38 @@ public class TeleOpMecanum extends LinearOpMode {
 
             //Fire up the shoot motors
             if (gamepad2.left_bumper){
-                shoot();
+                bangBang();
             } else {
                 motorShootOne.setPower(0);
                 motorShootTwo.setPower(0);
             }
 
             //load a ball into the shooter
-            if (gamepad2.right_bumper) {
+            if (gamepad2.right_bumper && !lifted) {
                 loader.setPosition(0.3);
-            } else{
+            } else if (!lifted) {
                 loader.setPosition(.5);
+            } else if(lifted) {
+                loader.setPosition(1);
             }
 
-            //deploy the cap ball lift
+            /* Cap ball is a WIP
+            if (gamepad2.right_trigger > 0) {
+                lifted = true;
+                motorLift.setPower(1);
+            } else if (gamepad2.left_trigger > 0){
+                motorLift.setPower(-1);
+            } else {
+                motorLift.setPower(0);
+            }
+            */
+
+            
+            if(gamepad2.y) {
+                lifted = false;
+            }
+
+           /* //deploy the cap ball lift
             if (gamepad1.left_bumper) {
                 leftLift.setPosition(.4);
                 rightLift.setPosition(.4);
@@ -182,11 +204,11 @@ public class TeleOpMecanum extends LinearOpMode {
             else if (gamepad1.right_bumper) {
                 leftLift.setPosition(.66);
                 rightLift.setPosition(.66);
-            }
+            }*/
 
-            drive	= -scaleInputOriginal(gamepad1.left_stick_y);
-            strafe	= scaleInputOriginal(gamepad1.left_stick_x);
-            rotate	= scaleInputOriginal(gamepad1.right_stick_x);
+            drive	= -gamepad1.left_stick_y;
+            strafe	= gamepad1.left_stick_x;
+            rotate	= gamepad1.right_stick_x;
 
             motorLF.setPower(Range.clip(drive - strafe + rotate, -1.0, 1.0));
             motorLB.setPower(Range.clip(drive + strafe + rotate, -1.0, 1.0));
@@ -259,7 +281,7 @@ public class TeleOpMecanum extends LinearOpMode {
 
         return color;
     }
-    public void shoot () {
+    public void bangBang () {
         fVelocityTime = System.nanoTime();
 
         fEncoder = motorShootOne.getCurrentPosition();
