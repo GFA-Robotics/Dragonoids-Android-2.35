@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.DragonoidsAuto;
 
-@Autonomous(name="Auto Test Blue", group="Blue")
+@Disabled
+//@Autonomous(name="Auto Test Blue", group="Blue")
 public class Autotest extends DragonoidsAuto {
 
     @Override

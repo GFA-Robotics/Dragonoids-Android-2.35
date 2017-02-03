@@ -5,9 +5,10 @@ package org.firstinspires.ftc.teamcode;
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
-@Autonomous(name="Shoot", group="")
+@Disabled
+//@Autonomous(name="Shoot", group="")
 public class DragonoidsAutoNoButton extends DragonoidsAuto {
 
     @Override
