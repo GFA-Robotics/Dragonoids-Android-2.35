@@ -182,11 +182,11 @@ public class TeleOpMecanumOriginal extends LinearOpMode {
                 rightLift.setPosition(.66);
             }
 
-            float[] input = new float[] {gamepad1.left_stick_x, -gamepad1.left_stick_y};
+            float[] input = new float[] {-gamepad1.left_stick_x, -gamepad1.left_stick_y};
             float[] processed = processInput(input);
-
+            rotate	= scaleInputOriginal(gamepad1.right_stick_x);
             //RF, LF, RB, LB
-            setMotorPower((float)Range.clip(-processed[0], -1.0, 1.0), (float)Range.clip(processed[1], -1.0, 1.0), (float)Range.clip(processed[1], -1.0, 1.0), (float)Range.clip(-processed[0], -1.0, 1.0));
+            setMotorPower((float)Range.clip(-processed[0] - rotate, -1.0, 1.0), (float)Range.clip(processed[1] + rotate, -1.0, 1.0), (float)Range.clip(processed[1] - rotate, -1.0, 1.0), (float)Range.clip(-processed[0] + rotate, -1.0, 1.0));
             /*
             drive	= -scaleInputOriginal(gamepad1.left_stick_y);
             strafe	= scaleInputOriginal(gamepad1.left_stick_x);
@@ -215,19 +215,19 @@ public class TeleOpMecanumOriginal extends LinearOpMode {
         // we're going to convert to polar, add pi/4 to theta, and convert back to cartesian.
         double r = Math.sqrt(Math.pow(input[0], 2) + Math.pow(input[1], 2));
         //because we treat positive y as 0, we adjust pi/2 to be 0, then add pi/4 to convert values to cardinal direction model
-        double t = (Math.PI/2);
+        double t = (- Math.PI/2);
         if(input[0] != 0.0) {
             t = Math.atan(input[1] / input[0]); // over to polar
         } else if(input[1] < 0) {
-            t = 3*(Math.PI/4);
+            t = Math.PI/2;
         }
 
         if(input[0] > 0) {
             t += Math.PI;
         }
-
-        double processedX = Math.cos(t + Math.PI/4)*r;
-        double processedY = Math.sin(t + Math.PI/4)*r; // back to cartesian, but added pi/4 to theta
+/////ur bad ur bda ur bad ur bda rtfjlkd[ofhtkdpro
+        double processedX = -Math.cos(t + Math.PI/4)*r;
+        double processedY = -Math.sin(t + Math.PI/4)*r; // back to cartesian, but added pi/4 to theta
 
         telemetry.addData("orig X: ", input[0]);
         telemetry.addData("orig Y: ", input[1]);
