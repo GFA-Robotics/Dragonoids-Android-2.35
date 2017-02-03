@@ -16,14 +16,16 @@ public class DragonoidsAutoBlue2 extends DragonoidsAuto {
         waitForStart();
 
         while (opModeIsActive()) {
-            sleep(8000);
+            sleep(10000);
+            forward(-.7,.5);
+            turn(-50);
             forward(-.4,.5);
-            turn(-40);
             shoot();
-            forward(-.5,.6);
-            strafe(.25,.5);
+            turn(-40);
+            forward(-1.2,.6);
             sleep(500);
-            strafe(-.2,.5);
+            forward(-.25,.6);
+            break;
         }
 
     }
