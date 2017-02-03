@@ -315,7 +315,7 @@ public class DragonoidsAuto extends LinearOpMode {
     }
 
     public void shoot () {
-
+        sleep(250);
         motorShootOne.setPower(0.75);
         motorShootTwo.setPower(0.75);
         sleep(250);
@@ -325,6 +325,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
         loader.setPosition(.5);
         sleep(1000);
+        forward(-.05,1);
+        sleep(200);
 
         loader.setPosition(.3);
         sleep(500);
