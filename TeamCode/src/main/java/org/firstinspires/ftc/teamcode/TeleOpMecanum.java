@@ -148,13 +148,12 @@ public class TeleOpMecanum extends LinearOpMode {
             telemetry.addData("leftBack", + motorLB.getPower());
             detectColor();
 
-
             //Run the collector
             if (gamepad2.a) {
-                motorDisp.setPower(-0.8);
+                motorDisp.setPower(1.0);
             }
             else if(gamepad2.b) {
-                motorDisp.setPower(.45);
+                motorDisp.setPower(-1.0);
             } else {
                 motorDisp.setPower(0);
             }
@@ -173,42 +172,33 @@ public class TeleOpMecanum extends LinearOpMode {
             } else if (!lifted) {
                 loader.setPosition(.5);
             } else if(lifted) {
-                loader.setPosition(1);
+                loader.setPosition(.98);
             }
 
-            /* Cap ball is a WIP
-            if (gamepad2.right_trigger > 0) {
+            // Cap ball is a WIP
+            if (gamepad2.right_trigger > 0.1) {
                 lifted = true;
-                motorLift.setPower(1);
+                motorLift.setPower(gamepad2.right_trigger);
             } else if (gamepad2.left_trigger > 0){
-                motorLift.setPower(-1);
+                motorLift.setPower(-gamepad2.left_trigger);
             } else {
                 motorLift.setPower(0);
+                motorLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
-            */
-
             
-            if(gamepad2.y) {
+            if(gamepad2.y || gamepad1.y) {
                 lifted = false;
             }
 
-           /* //deploy the cap ball lift
-            if (gamepad1.left_bumper) {
-                leftLift.setPosition(.4);
-                rightLift.setPosition(.4);
-            } //store the cap ball lift
-            else if (gamepad1.left_trigger>.2) {
-                leftLift.setPosition(1.0);
-                rightLift.setPosition(1.0);
-            } //execute order 66
-            else if (gamepad1.right_bumper) {
-                leftLift.setPosition(.66);
-                rightLift.setPosition(.66);
-            }*/
-
-            drive	= -gamepad1.left_stick_y;
-            strafe	= gamepad1.left_stick_x;
-            rotate	= gamepad1.right_stick_x;
+            if (!lifted) {
+                drive = scaleInput(-gamepad1.left_stick_y);
+                strafe = scaleInput(gamepad1.left_stick_x);
+                rotate = scaleInput(gamepad1.right_stick_x);
+            } else {
+                drive = scaleInput(-gamepad1.left_stick_y)*.2;
+                strafe = scaleInput(gamepad1.left_stick_x)*.2;
+                rotate = scaleInput(gamepad1.right_stick_x)*.2;
+            }
 
             motorLF.setPower(Range.clip(drive - strafe + rotate, -1.0, 1.0));
             motorLB.setPower(Range.clip(drive + strafe + rotate, -1.0, 1.0));
