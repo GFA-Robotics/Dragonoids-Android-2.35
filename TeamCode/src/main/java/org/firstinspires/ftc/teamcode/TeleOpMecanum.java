@@ -167,11 +167,9 @@ public class TeleOpMecanum extends LinearOpMode {
             }
 
             //load a ball into the shooter
-            if (gamepad2.right_bumper && !lifted) {
+            if (gamepad2.right_bumper) {
                 loader.setPosition(0.3);
-            } else if (!lifted) {
-                loader.setPosition(.5);
-            } else if(lifted) {
+            } else {
                 loader.setPosition(.98);
             }
 
