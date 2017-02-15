@@ -44,8 +44,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
     Servo buttonPresser;
 
-    Servo leftLift;
-    Servo rightLift;
+    Servo leftRelease;
+    Servo rightRelease;
 
     ColorSensor colorSensor;
     OpticalDistanceSensor lineSensor;
@@ -95,10 +95,10 @@ public class DragonoidsAuto extends LinearOpMode {
 
         loader = hardwareMap.servo.get("loader");
 
-        leftLift = hardwareMap.servo.get("leftLift");
-        rightLift = hardwareMap.servo.get("rightLift");
+        leftRelease = hardwareMap.servo.get("leftLift");
+        rightRelease = hardwareMap.servo.get("rightLift");
 
-        leftLift.setDirection(Servo.Direction.REVERSE);
+        leftRelease.setDirection(Servo.Direction.REVERSE);
 
         gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
 
@@ -124,12 +124,15 @@ public class DragonoidsAuto extends LinearOpMode {
 
         loader.setPosition(.5);
 
-        leftLift.setPosition(1);
-        rightLift.setPosition(1);
+        leftRelease.setPosition(.25);
+        rightRelease.setPosition(.25);
+
         motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         initLight = lineSensor.getLightDetected();
+
+        colorSensor.enableLed(false);
 
         telemetry.addData("Calibrated", targetAngle);
         telemetry.update();
@@ -442,7 +445,7 @@ public class DragonoidsAuto extends LinearOpMode {
             }
         }
         else {
-            while (opModeIsActive()&&(getRange()<5)){
+            while (opModeIsActive()&&(getRange()<7)){
                 motorRF.setPower(.35);
                 motorRB.setPower(-.35);
                 motorLF.setPower(-.35);

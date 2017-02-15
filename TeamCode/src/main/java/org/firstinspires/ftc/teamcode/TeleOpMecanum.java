@@ -62,8 +62,8 @@ public class TeleOpMecanum extends LinearOpMode {
 
     Servo loader;
 
-    Servo leftLift;
-    Servo rightLift;
+    Servo leftRelease;
+    Servo rightRelease;
 
     ColorSensor colorSensor;
     boolean color;
@@ -118,15 +118,15 @@ public class TeleOpMecanum extends LinearOpMode {
         loader = hardwareMap.servo.get("loader");
         loader.setPosition(.5);
 
-        leftLift = hardwareMap.servo.get("leftLift");
-        rightLift = hardwareMap.servo.get("rightLift");
+        leftRelease = hardwareMap.servo.get("leftLift");
+        rightRelease = hardwareMap.servo.get("rightLift");
 
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
 
-        leftLift.setDirection(Servo.Direction.REVERSE);
+        leftRelease.setDirection(Servo.Direction.REVERSE);
 
-        leftLift.setPosition(1);
-        rightLift.setPosition(1);
+        leftRelease.setPosition(.25);
+        rightRelease.setPosition(.25);
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -170,7 +170,7 @@ public class TeleOpMecanum extends LinearOpMode {
             if (gamepad2.right_bumper) {
                 loader.setPosition(0.3);
             } else {
-                loader.setPosition(.98);
+                loader.setPosition(.5);
             }
 
             // Cap ball is a WIP
@@ -186,6 +186,14 @@ public class TeleOpMecanum extends LinearOpMode {
             
             if(gamepad2.y || gamepad1.y) {
                 lifted = false;
+            }
+
+            if (gamepad1.right_bumper && gamepad1.left_bumper) {
+                leftRelease.setPosition(0);
+                rightRelease.setPosition(0);
+            } else {
+                leftRelease.setPosition(.25);
+                rightRelease.setPosition(.25);
             }
 
             if (!lifted) {
