@@ -68,7 +68,7 @@ public class DragonoidsAuto extends LinearOpMode {
 
     final static double ROTATE = TILE / WHEEL_CIRC;
 
-    boolean color;
+    int color;
 
     // hsvValues is an array that will hold the hue, saturation, and value information.
     float hsvValues[] = {0F,0F,0F};
@@ -109,8 +109,10 @@ public class DragonoidsAuto extends LinearOpMode {
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
         gyro.calibrate();
-        while (gyro.isCalibrating()) {
+        while (!isStopRequested() && gyro.isCalibrating()) {
             sleep(1);
+            telemetry.addData("Measurement mode", gyro.getMeasurementMode());
+            telemetry.update();
         }
 
         gyro.resetZAxisIntegrator();
@@ -337,10 +339,10 @@ public class DragonoidsAuto extends LinearOpMode {
         loader.setPosition(.5);
     }
 
-    public boolean detectColor () {
+    public int detectColor () {
 
         //false is red
-        color = false;
+        color = 0;
         // convert the RGB values to HSV values.
         Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
 
@@ -349,13 +351,13 @@ public class DragonoidsAuto extends LinearOpMode {
         telemetry.addData("Blue ", colorSensor.blue());
 
         if (colorSensor.red()>colorSensor.blue()) {
-            color = false;
-        }
-        else {
-            color = true;
+            //red is 1
+            color = 1;
+        } else {
+            //blue is 2
+            color = 2;
         }
 
-        telemetry.update();
         return color;
     }
 

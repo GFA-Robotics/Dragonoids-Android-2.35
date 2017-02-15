@@ -56,6 +56,8 @@ public class SensorTest extends LinearOpMode{
         while (!isStopRequested() && gyro.isCalibrating())  {
             sleep(50);
         }
+        telemetry.addData("Calibrated", gyro.getIntegratedZValue());
+        telemetry.update();
         waitForStart();
 
         while (opModeIsActive()) {
