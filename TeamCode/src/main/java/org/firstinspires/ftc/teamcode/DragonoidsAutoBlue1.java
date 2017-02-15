@@ -27,11 +27,14 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
             adjustHeading();
             adjustRange();
             alignLine(true);
-            if (detectColor()) {
+            if (detectColor()==2) {
                 forward(-.05,.5);
                 strafe(.6, 1);
-            } else {
+            } else if (detectColor()==1){
                 forward(.13, .4);
+            }
+            if (detectColor()==2) {
+                forward(.05,.5);
                 strafe(.6, 1);
             }
             strafe(-.65,1);
@@ -39,11 +42,14 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
             adjustRange();
             adjustHeading();
             alignLine(false);
-            if (detectColor()) {
+            if (detectColor()==2) {
                 forward(-.05,.5);
                 strafe(.6, 1);
-            } else {
+            } else if (detectColor()==1){
                 forward(.13, .4);
+            }
+            if (detectColor()==2) {
+                forward(.05,.5);
                 strafe(.6, 1);
             }
             adjustRange();

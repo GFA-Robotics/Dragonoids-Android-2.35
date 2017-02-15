@@ -27,10 +27,14 @@ public class Autotest extends DragonoidsAuto {
             adjustHeading();
             adjustRange();
             alignLine(true);
-            if (detectColor()) {
+            if (detectColor()==1) {
+                forward(-.05,.5);
                 strafe(.6, 1);
-            } else {
+            } else if (detectColor()==2){
                 forward(.13, .4);
+            }
+            if (detectColor()==2) {
+                forward(.05,.5);
                 strafe(.6, 1);
             }
             strafe(-.5,1);
@@ -38,11 +42,15 @@ public class Autotest extends DragonoidsAuto {
             adjustRange();
             adjustHeading();
             alignLine(false);
-            if (detectColor()) {
-                strafe(.5, 1);
-            } else {
+            if (detectColor()==1) {
+                forward(-.05,.5);
+                strafe(.6, 1);
+            } else if (detectColor()==2){
                 forward(.13, .4);
-                strafe(.5, 1);
+            }
+            if (detectColor()==2) {
+                forward(.05,.5);
+                strafe(.6, 1);
             }
             adjustRange();
             break;
