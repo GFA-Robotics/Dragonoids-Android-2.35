@@ -76,6 +76,13 @@ public class DragonoidsAuto extends LinearOpMode {
     // values is a reference to the hsvValues array.
     final float values[] = hsvValues;
 
+    //variables for bangBang
+    double fVelocity;
+    long fVelocityTime;
+    long fLastVelocityTime;
+    int fEncoder;
+    int fLastEncoder;
+
     public void runOpMode() throws InterruptedException {
 
         // get a reference to our ColorSensor object.
@@ -122,7 +129,7 @@ public class DragonoidsAuto extends LinearOpMode {
         // changed the heading to signed heading [-360,360]
         gyro.setHeadingMode(ModernRoboticsI2cGyro.HeadingMode.HEADING_CARTESIAN);
 
-        loader.setPosition(.5);
+        loader.setPosition(.515);
 
         leftRelease.setPosition(.25);
         rightRelease.setPosition(.25);
@@ -321,17 +328,14 @@ public class DragonoidsAuto extends LinearOpMode {
 
     public void shoot () {
         sleep(250);
-        motorShootOne.setPower(0.75);
-        motorShootTwo.setPower(0.75);
+        motorShootOne.setPower(.75);
+        motorShootTwo.setPower(.75);
         sleep(250);
-
         loader.setPosition(.3);
         sleep(500);
 
-        loader.setPosition(.5);
-        sleep(1000);
-        forward(-.05,1);
-        sleep(200);
+        loader.setPosition(.508);
+        sleep(1250);
 
         loader.setPosition(.3);
         sleep(500);
@@ -339,12 +343,30 @@ public class DragonoidsAuto extends LinearOpMode {
         motorShootOne.setPower(0);
         motorShootTwo.setPower(0);
 
-        loader.setPosition(.5);
+        loader.setPosition(.515);
+    }
+
+    public void bangBang () {
+        fVelocityTime = System.nanoTime();
+
+        fEncoder = motorShootOne.getCurrentPosition();
+
+        fVelocity = (double) (fEncoder - fLastEncoder) / (fVelocityTime - fLastVelocityTime);
+
+        if (fVelocity >= .82) {
+            motorShootOne.setPower(.78);
+            motorShootTwo.setPower(.78);
+        } else if (fVelocity < .82) {
+            motorShootOne.setPower(.82);
+            motorShootTwo.setPower(.82);
+        }
+        fLastEncoder = fEncoder;
+        fLastVelocityTime = fVelocityTime;
     }
 
     public int detectColor () {
 
-        //false is red
+        //0 is no color
         color = 0;
         // convert the RGB values to HSV values.
         Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
@@ -356,7 +378,7 @@ public class DragonoidsAuto extends LinearOpMode {
         if (colorSensor.red()>colorSensor.blue()) {
             //red is 1
             color = 1;
-        } else {
+        } else if (colorSensor.blue() > colorSensor.red()){
             //blue is 2
             color = 2;
         }
@@ -437,7 +459,7 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         if (range>7) {
-            while ((opModeIsActive()&&getRange()>7)) {
+            while ((opModeIsActive()&&getRange()>7.75)) {
                 motorRF.setPower(-.35);
                 motorRB.setPower(.35);
                 motorLF.setPower(.35);
@@ -445,7 +467,7 @@ public class DragonoidsAuto extends LinearOpMode {
             }
         }
         else {
-            while (opModeIsActive()&&(getRange()<7)){
+            while (opModeIsActive()&&(getRange()<7.75)){
                 motorRF.setPower(.35);
                 motorRB.setPower(-.35);
                 motorLF.setPower(-.35);
