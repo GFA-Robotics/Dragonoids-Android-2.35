@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.DragonoidsAuto;
 
-@Disabled
-//@Autonomous(name="Auto Test Blue", group="Blue")
+
+@Autonomous(name="Auto Test", group="")
 public class Autotest extends DragonoidsAuto {
 
     @Override
@@ -16,43 +16,44 @@ public class Autotest extends DragonoidsAuto {
         waitForStart();
 
         while (opModeIsActive()) {
-            //blue side full autonomous
-            forward(-.93,.6);
+            //red side full autonomous
+            forward(-.75,.4);
             shoot();
-            forward(-.5,.6);
-            strafe(.5, .6);
-            sleep(250);
-            strafe(.25, .8);
-            rightDiagonal(-1.4, .75);
-            adjustHeading();
+            forward(-.7,.6);
+            strafe(-.75, .6);
+            turn(-180);
+            leftDiagonal(.75, .75);
             adjustRange();
+            adjustHeading();
             alignLine(true);
             if (detectColor()==1) {
                 forward(-.05,.5);
-                strafe(.6, 1);
+                strafe(.5, 1);
             } else if (detectColor()==2){
-                forward(.13, .4);
+                forward(.35, .4);
             }
             if (detectColor()==2) {
                 forward(.05,.5);
-                strafe(.6, 1);
+                strafe(.5, 1);
             }
             strafe(-.5,1);
-            forward(1.5,1);
-            adjustRange();
+            forward(1.5,.75);
             adjustHeading();
+            adjustRange();
             alignLine(false);
             if (detectColor()==1) {
                 forward(-.05,.5);
-                strafe(.6, 1);
+                strafe(.5, 1);
             } else if (detectColor()==2){
-                forward(.13, .4);
+                forward(.35, .4);
             }
             if (detectColor()==2) {
                 forward(.05,.5);
-                strafe(.6, 1);
+                strafe(.5, 1);
             }
             adjustRange();
+            //turn(0);
+
             break;
        }
     }
