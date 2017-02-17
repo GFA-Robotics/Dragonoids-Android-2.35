@@ -21,38 +21,36 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
             forward(-.75,.4);
             shoot();
             forward(-.7,.6);
-            strafe(-.5, .6);
-            sleep(250);
-            strafe(-.25, .8);
+            strafe(-.75, .6);
             turn(-180);
-            leftDiagonal(1.5, .75);
-            adjustRange();
-            adjustHeading();
-            alignLine(false);
-            if (detectColor()==1) {
-                forward(-.05,.5);
-                strafe(.6, 1);
-            } else if (detectColor()==2){
-                forward(.13, .4);
-            }
-            if (detectColor()==2) {
-                forward(.05,.5);
-                strafe(.6, 1);
-            }
-            strafe(-.65,1);
-            forward(-1.5,1);
+            leftDiagonal(.75, .75);
             adjustRange();
             adjustHeading();
             alignLine(true);
             if (detectColor()==1) {
                 forward(-.05,.5);
-                strafe(.6, 1);
+                strafe(.5, 1);
             } else if (detectColor()==2){
-                forward(.13, .4);
+                forward(.35, .4);
             }
             if (detectColor()==2) {
                 forward(.05,.5);
-                strafe(.6, 1);
+                strafe(.5, 1);
+            }
+            strafe(-.5,1);
+            forward(1.5,.75);
+            adjustHeading();
+            adjustRange();
+            alignLine(false);
+            if (detectColor()==1) {
+                forward(-.05,.5);
+                strafe(.5, 1);
+            } else if (detectColor()==2){
+                forward(.35, .4);
+            }
+            if (detectColor()==2) {
+                forward(.05,.5);
+                strafe(.5, 1);
             }
             adjustRange();
             //turn(0);
