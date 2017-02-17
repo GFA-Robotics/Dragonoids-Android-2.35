@@ -116,7 +116,7 @@ public class TeleOpMecanum extends LinearOpMode {
         motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         loader = hardwareMap.servo.get("loader");
-        loader.setPosition(.5);
+        loader.setPosition(.515);
 
         leftRelease = hardwareMap.servo.get("leftLift");
         rightRelease = hardwareMap.servo.get("rightLift");
@@ -170,7 +170,7 @@ public class TeleOpMecanum extends LinearOpMode {
             if (gamepad2.right_bumper) {
                 loader.setPosition(0.3);
             } else {
-                loader.setPosition(.5);
+                loader.setPosition(.515);
             }
 
             // Cap ball is a WIP
