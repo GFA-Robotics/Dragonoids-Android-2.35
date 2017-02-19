@@ -17,40 +17,36 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
 
         while (opModeIsActive()) {
             //blue side full autonomous
-            forward(-.75,.6);
+            forward(-.75, .75);
             shoot();
-            forward(-.7,.6);
-            strafe(.5, .6);
-            sleep(250);
-            strafe(.25, .8);
-            rightDiagonal(-1.4, .75);
-            adjustHeading();
-            adjustRange();
-            alignLine(true);
-            if (detectColor()==2) {
-                forward(-.05,.5);
-                strafe(.6, 1);
-            } else if (detectColor()==1){
-                forward(.13, .4);
-            }
-            if (detectColor()==2) {
-                forward(.05,.5);
-                strafe(.6, 1);
-            }
-            strafe(-.65,1);
-            forward(1.5,1);
+            forward(-.7, .6);
+            strafe(.75, .6);
+            rightDiagonal(-1, .75);
             adjustRange();
             adjustHeading();
             alignLine(false);
             if (detectColor()==2) {
                 forward(-.05,.5);
-                strafe(.6, 1);
+                sleep(250);
+                strafe(.75, 1);
             } else if (detectColor()==1){
-                forward(.13, .4);
+                forward(.15, .4);
+                sleep(250);
+                strafe(.75, 1);
             }
+            strafe(-.65,1);
+            forward(-1.5,1);
+            adjustRange();
+            adjustHeading();
+            alignLine(true);
             if (detectColor()==2) {
-                forward(.05,.5);
-                strafe(.6, 1);
+                forward(-.05,.5);
+                sleep(250);
+                strafe(.75, 1);
+            } else if (detectColor()==1){
+                forward(.15, .4);
+                sleep(250);
+                strafe(.75, 1);
             }
             adjustRange();
             break;
