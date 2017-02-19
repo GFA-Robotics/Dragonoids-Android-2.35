@@ -177,6 +177,7 @@ public class DragonoidsAuto extends LinearOpMode {
         motorRB.setPower(power);
         motorLF.setPower(power);
         motorLB.setPower(power);
+
         while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))) {
         }
@@ -328,14 +329,18 @@ public class DragonoidsAuto extends LinearOpMode {
 
     public void shoot () {
         sleep(250);
-        motorShootOne.setPower(.75);
-        motorShootTwo.setPower(.75);
-        sleep(250);
+        motorShootOne.setPower(.62);
+        motorShootTwo.setPower(.62);
+        sleep(750);
         loader.setPosition(.3);
-        sleep(500);
+        sleep(250);
+
+        motorShootOne.setPower(.619);
+        motorShootTwo.setPower(.619);
+        sleep(250);
 
         loader.setPosition(.508);
-        sleep(1250);
+        sleep(1750);
 
         loader.setPosition(.3);
         sleep(500);
