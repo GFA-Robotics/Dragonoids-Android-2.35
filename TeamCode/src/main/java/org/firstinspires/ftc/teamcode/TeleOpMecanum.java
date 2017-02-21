@@ -33,6 +33,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.provider.MediaStore;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -134,6 +136,10 @@ public class TeleOpMecanum extends LinearOpMode {
 
         motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
 
+        MediaPlayer hammer = MediaPlayer.create(hardwareMap.appContext, R.raw.Hammerdown);
+        MediaPlayer range = MediaPlayer.create(hardwareMap.appContext, R.raw.inRange);
+        MediaPlayer rocky = MediaPlayer.create(hardwareMap.appContext, R.raw.Rocky);
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -161,6 +167,7 @@ public class TeleOpMecanum extends LinearOpMode {
             //Fire up the shoot motors
             if (gamepad2.left_bumper){
                 bangBang();
+                range.start();
             } else {
                 motorShootOne.setPower(0);
                 motorShootTwo.setPower(0);
@@ -177,6 +184,7 @@ public class TeleOpMecanum extends LinearOpMode {
             if (gamepad2.right_trigger > 0.1) {
                 lifted = true;
                 motorLift.setPower(gamepad2.right_trigger);
+                rocky.start();
             } else if (gamepad2.left_trigger > 0){
                 motorLift.setPower(-gamepad2.left_trigger);
             } else {
@@ -191,6 +199,7 @@ public class TeleOpMecanum extends LinearOpMode {
             if (gamepad1.right_bumper && gamepad1.left_bumper) {
                 leftRelease.setPosition(0);
                 rightRelease.setPosition(0);
+                hammer.start();
             } else {
                 leftRelease.setPosition(.25);
                 rightRelease.setPosition(.25);
@@ -215,6 +224,9 @@ public class TeleOpMecanum extends LinearOpMode {
             telemetry.update();
 
         }
+        hammer.stop();
+        range.stop();
+        rocky.stop();
 
     }
 

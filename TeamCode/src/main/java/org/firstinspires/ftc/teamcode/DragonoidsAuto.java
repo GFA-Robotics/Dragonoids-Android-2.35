@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
 import android.hardware.SensorEventListener;
+import android.media.MediaPlayer;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
@@ -141,8 +142,14 @@ public class DragonoidsAuto extends LinearOpMode {
 
         colorSensor.enableLed(false);
 
+        MediaPlayer check = MediaPlayer.create(hardwareMap.appContext, R.raw.check);
+
         telemetry.addData("Calibrated", targetAngle);
         telemetry.update();
+
+        check.start();
+        sleep(5100);
+        check.stop();
     }
 
     public void resetEncoders() {
