@@ -143,6 +143,9 @@ public class DragonoidsAuto extends LinearOpMode {
 
         telemetry.addData("Calibrated", targetAngle);
         telemetry.update();
+
+        waitForStart();
+        gyro.resetZAxisIntegrator();
     }
 
     public void resetEncoders() {
