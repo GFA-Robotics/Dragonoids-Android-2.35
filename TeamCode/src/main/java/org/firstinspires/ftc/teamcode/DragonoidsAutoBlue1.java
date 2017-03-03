@@ -17,9 +17,9 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
 
         while (opModeIsActive()) {
             //blue side full autonomous
-            forward(-.75, .75);
+            forward(-.25, .75);
             shoot();
-            forward(-.7, .6);
+            forward(-1.2, .6);
             strafe(.75, .6);
             rightDiagonal(-1, .75);
             adjustRange();
@@ -39,6 +39,7 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
             adjustRange();
             adjustHeading();
             alignLine(true);
+            sleep(500);
             if (detectColor()==2) {
                 forward(-.05,.5);
                 sleep(250);
