@@ -14,7 +14,6 @@ public class DragonoidsAutoNoButton extends DragonoidsAuto {
     @Override
     public void runOpMode() throws InterruptedException {
         super.runOpMode();
-        waitForStart();
 
         //get in position to shoot and shoot twice
         sleep(10000);

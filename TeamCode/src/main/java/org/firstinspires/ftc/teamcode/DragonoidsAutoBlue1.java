@@ -13,7 +13,6 @@ public class DragonoidsAutoBlue1 extends DragonoidsAuto {
     @Override
     public void runOpMode() throws InterruptedException {
         super.runOpMode();
-        waitForStart();
 
         while (opModeIsActive()) {
             //blue side full autonomous
