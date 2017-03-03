@@ -17,27 +17,9 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
         waitForStart();
 
         while (opModeIsActive()) {
-            //red side full autonomous
-            forward(-.75, .75);
-            shoot();
-            forward(-.7, .6);
-            strafe(-.75, .6);
-            turn(-180);
-            leftDiagonal(.75, .75);
-            adjustRange();
-            adjustHeading();
-            alignLine(true);
-            if (detectColor()==1) {
-                forward(-.05,.5);
-                sleep(250);
-                strafe(.75, 1);
-            } else if (detectColor()==2){
-                forward(.15, .4);
-                sleep(250);
-                strafe(.75, 1);
-            }
-            strafe(-.5,1);
-            forward(1.5,.75);
+            forward(1.45,.6);
+            strafe(1, .8);
+            forward(2.2,1);
             adjustHeading();
             adjustRange();
             alignLine(false);
@@ -51,7 +33,24 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
                 strafe(.75, 1);
             }
             adjustRange();
-            //turn(0);
+            forward(-1.7,.5);
+            adjustRange();
+            adjustHeading();
+            alignLine(true);
+            if (detectColor()==1) {
+                forward(-.05,.5);
+                sleep(250);
+                strafe(.75, 1);
+            } else if (detectColor()==2){
+                forward(.15, .4);
+                sleep(250);
+                strafe(.75, 1);
+            }
+            adjustRange();
+            turn(90);
+            shoot();
+            strafe(-.5,1);
+            forward(-1.55,.8);
 
             break;
         }
