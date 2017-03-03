@@ -186,7 +186,7 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
 
-        while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
+        while (opModeIsActive() && (Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))*/)) {
 
             if (gyro.getIntegratedZValue() != (targetAngle)) {
@@ -296,8 +296,8 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
 
-        while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
-                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))) {
+        while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
+                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)*/)) {
         }
 
         stopMotors();
