@@ -125,8 +125,8 @@ public class TeleOpMecanum extends LinearOpMode {
 
         leftRelease.setDirection(Servo.Direction.REVERSE);
 
-        leftRelease.setPosition(.25);
-        rightRelease.setPosition(.25);
+        leftRelease.setPosition(1);
+        rightRelease.setPosition(1);
 
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors

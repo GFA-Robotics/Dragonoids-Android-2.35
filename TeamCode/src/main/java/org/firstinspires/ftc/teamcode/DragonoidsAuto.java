@@ -131,8 +131,8 @@ public class DragonoidsAuto extends LinearOpMode {
 
         loader.setPosition(.515);
 
-        leftRelease.setPosition(.25);
-        rightRelease.setPosition(.25);
+        leftRelease.setPosition(1);
+        rightRelease.setPosition(1);
 
         motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
