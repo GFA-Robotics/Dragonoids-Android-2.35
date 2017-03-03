@@ -13,9 +13,9 @@ public class DragonoidsAutoBlue3 extends DragonoidsAuto{
         super.runOpMode();
 
         while (opModeIsActive()) {
-            forward(-1.45,.6);
-            strafe(1, .8);
-            forward(-2,1);
+            forward(-1.5,.6);
+            strafe(1.25, .8);
+            forward(-2.2,1);
             adjustHeading();
             adjustRange();
             alignLine(true);
@@ -29,7 +29,7 @@ public class DragonoidsAutoBlue3 extends DragonoidsAuto{
                 strafe(.75, 1);
             }
             adjustRange();
-            forward(1.7,.5);
+            forward(1.7,.65);
             adjustRange();
             adjustHeading();
             alignLine(false);
@@ -42,11 +42,11 @@ public class DragonoidsAutoBlue3 extends DragonoidsAuto{
                 sleep(250);
                 strafe(.75, 1);
             }
-            adjustRange();
-            turn(-90);
+            strafe(-.9,.8);
+            turn(100);
             shoot();
-            strafe(.5,1);
-            forward(1.55,.8);
+            strafe(.65,1);
+            forward(-1.45,.8);
 
             break;
         }
