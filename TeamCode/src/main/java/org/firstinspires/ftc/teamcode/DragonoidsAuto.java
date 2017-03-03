@@ -186,9 +186,6 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
 
-        while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
-                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))) {
-
             if (gyro.getIntegratedZValue() < (targetAngle - 3)) {
                 motorRF.setPower(power-power/10);
                 motorRB.setPower(power-power/10);
@@ -199,6 +196,9 @@ public class DragonoidsAuto extends LinearOpMode {
                 motorRB.setPower(power+power/10);
                 motorLF.setPower(power-power/10);
                 motorLB.setPower(power-power/10);
+        while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
+                Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))*/)) {
+
             } else {
                 motorRF.setPower(power);
                 motorRB.setPower(power);
