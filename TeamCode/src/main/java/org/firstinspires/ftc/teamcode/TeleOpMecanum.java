@@ -80,6 +80,10 @@ public class TeleOpMecanum extends LinearOpMode {
 
     final static int ENCODER_CPR = 1120;
     final static double WHEEL_CIRC = 4 * Math.PI;
+    // 1 tile length is 24 inches
+    final static int TILE = 24;
+
+    final static double ROTATE = TILE / WHEEL_CIRC;
 
     boolean lifted = false;
 
@@ -173,7 +177,6 @@ public class TeleOpMecanum extends LinearOpMode {
                 loader.setPosition(.515);
             }
 
-            // Cap ball is a WIP
             if (gamepad2.right_trigger > 0.1) {
                 lifted = true;
                 motorLift.setPower(gamepad2.right_trigger);
@@ -192,8 +195,45 @@ public class TeleOpMecanum extends LinearOpMode {
                 leftRelease.setPosition(0);
                 rightRelease.setPosition(0);
             } else {
-                leftRelease.setPosition(.25);
-                rightRelease.setPosition(.25);
+                leftRelease.setPosition(1);
+                rightRelease.setPosition(1);
+            }
+
+            //move into position function
+            if (gamepad1.x) {
+
+               double distance = ENCODER_CPR * ROTATE * 2;
+
+                motorRF.setTargetPosition((int) distance);
+                motorRB.setTargetPosition((int) distance);
+                motorLF.setTargetPosition((int) distance);
+                motorLB.setTargetPosition((int) distance);
+
+                motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                motorRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                motorLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                motorLB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                motorRF.setPower(.9);
+                motorRB.setPower(.9);
+                motorLF.setPower(.9);
+                motorLB.setPower(.9);
+
+                while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
+                        Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))) {
+
+                }
+                motorRF.setPower(0);
+                motorRB.setPower(0);
+                motorLF.setPower(0);
+                motorLB.setPower(0);
+
+                motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            } else {
+                
             }
 
             if (!lifted) {
