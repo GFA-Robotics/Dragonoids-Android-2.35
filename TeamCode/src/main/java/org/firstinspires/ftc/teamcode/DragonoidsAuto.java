@@ -186,19 +186,14 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
 
-            if (gyro.getIntegratedZValue() < (targetAngle - 3)) {
-                motorRF.setPower(power-power/10);
-                motorRB.setPower(power-power/10);
-                motorLF.setPower(power+power/10);
-                motorLB.setPower(power+power/10);
-            } else if (gyro.getIntegratedZValue() > (targetAngle + 3)) {
-                motorRF.setPower(power+power/10);
-                motorRB.setPower(power+power/10);
-                motorLF.setPower(power-power/10);
-                motorLB.setPower(power-power/10);
         while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))*/)) {
 
+            if (gyro.getIntegratedZValue() != (targetAngle)) {
+                motorRF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
+                motorRB.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
+                motorLF.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
+                motorLB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
             } else {
                 motorRF.setPower(power);
                 motorRB.setPower(power);
