@@ -150,12 +150,15 @@ public class DragonoidsAuto extends LinearOpMode {
         gyro.resetZAxisIntegrator();
     }
 
+    //reset encoders needs to be called at the beginning of functions for distance to be accurately calculated. Makes encoder count zero again
     public void resetEncoders() {
         motorRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
+
+    //stop motors needs to be called at the end of functions to avoid conflict. Turns off all drive motors
     public void stopMotors() {
         motorRF.setPower(0);
         motorRB.setPower(0);
@@ -163,29 +166,34 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLB.setPower(0);
     }
 
+    //forward moves the robot forward passing a distance in units of tiles and a motor power
     public void forward (double distance, double power) {
         resetEncoders();
 
+        //turn tile distance back into rotations
         distance = ENCODER_CPR * ROTATE * distance;
 
+        //target position stores set number of rotations in encoder memory for use
         motorRF.setTargetPosition((int) distance);
         motorRB.setTargetPosition((int) distance);
         motorLF.setTargetPosition((int) distance);
         motorLB.setTargetPosition((int) distance);
 
+        //turns on motors until they reach the target position
         motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        //passes in specific power to drive motors
         motorRF.setPower(power);
         motorRB.setPower(power);
         motorLF.setPower(power);
         motorLB.setPower(power);
 
+        //this loop actively corrects angle during movement by adjusting power based on gyro distance from target angle
         while (opModeIsActive() && (Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))*/)) {
-
                 motorRF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
                 motorRB.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
                 motorLF.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
@@ -196,20 +204,26 @@ public class DragonoidsAuto extends LinearOpMode {
 
     }
 
+    //turn turns the robot on the spot passing in a specific angle in degrees. Can be positive or negative input
     public void turn (int angle) {
         resetEncoders();
 
+        //no power is passed in input and is auto-calculated
         double power;
 
+        //changes global target angle to the new angle to correct to that one
         targetAngle = angle;
 
+        //variable to keep track of current angle using gyro
         int currentAngle = gyro.getIntegratedZValue();
 
+        //R U E runs until different (non target position) criteria is met.
         motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        //until gyro reaches target angle, pass power. Then break and finish
         if ((targetAngle-currentAngle)>0) {
             while (opModeIsActive() && (targetAngle > gyro.getIntegratedZValue())) {
 
@@ -267,15 +281,18 @@ public class DragonoidsAuto extends LinearOpMode {
 
     }
 
+    //strafe allows horizontal movement of the robot using mechanum drive. Positive distance is to the right, negative is to the left.
     public void strafe (double distance, double power) {
         resetEncoders();
         distance = ENCODER_CPR * ROTATE * distance;
 
+        //motors in the direction of motion go inwards in mechanum drive, opposite wheels go outward.
         motorRF.setTargetPosition((int) -distance);
         motorRB.setTargetPosition((int) distance);
         motorLF.setTargetPosition((int) distance);
         motorLB.setTargetPosition((int) -distance);
 
+        //runs until distance is reached
         motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -286,6 +303,7 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLF.setPower(power);
         motorLB.setPower(power);
 
+        //auto corrects based on distance from correct target angle
         while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)*/)) {
 
@@ -300,22 +318,25 @@ public class DragonoidsAuto extends LinearOpMode {
 
     }
 
+    //right diagonal moves the robot in a right diagonal, passing distance and power as inputs
     public void rightDiagonal (double distance, double power) {
         resetEncoders();
 
+        //tile to rotation calculation
         distance = ENCODER_CPR * ROTATE * distance * 2;
 
+        //in mechanum drive only half the wheels need to move, the rest drag on the ground
+        motorRF.setTargetPosition((int) distance);
+        motorLB.setTargetPosition((int) distance);
 
-            motorRF.setTargetPosition((int) distance);
-            motorLB.setTargetPosition((int) distance);
-
-
+        //runs until reaching set distance
         motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         motorRF.setPower(power);
         motorLB.setPower(power);
 
+        //wait until reaching target distance to stop
         while (opModeIsActive() && (Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance) ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance))) {
         }
@@ -323,14 +344,17 @@ public class DragonoidsAuto extends LinearOpMode {
         stopMotors();
     }
 
+    //left diagonal moves the robot in a left diagonal, passing the distance and power as inputs
     public void leftDiagonal (double distance, double power) {
         resetEncoders();
 
+        //tile back to rotation calculation
         distance = ENCODER_CPR * ROTATE * distance * 2;
 
         motorRB.setTargetPosition((int) distance);
         motorLF.setTargetPosition((int) distance);
 
+        //wait until position is reached to stop
         motorRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -370,6 +394,7 @@ public class DragonoidsAuto extends LinearOpMode {
         loader.setPosition(.515);
     }
 
+    //bangbang is currently not used in any autonomous. It is used in tele-op for consistent shooting
     public void bangBang () {
         fVelocityTime = System.nanoTime();
 
@@ -388,6 +413,7 @@ public class DragonoidsAuto extends LinearOpMode {
         fLastVelocityTime = fVelocityTime;
     }
 
+    //detect color interprets input from the color sensor and outputs a new color variable
     public int detectColor () {
 
         //0 is no color
@@ -423,10 +449,6 @@ public class DragonoidsAuto extends LinearOpMode {
             turn(adjustedAngle);
         }
         targetAngle = prevTargetAngle;
-    }
-
-    public void adjustHeadingSensor() {
-
     }
 
     public boolean detectLine(){
@@ -474,6 +496,10 @@ public class DragonoidsAuto extends LinearOpMode {
         stopMotors();
     }
 
+    public double getRange () {
+        double range = rangeSensor.getDistance(DistanceUnit.INCH);
+        return range;
+    }
 
     public void adjustRange () {
         double range = getRange();
@@ -500,9 +526,6 @@ public class DragonoidsAuto extends LinearOpMode {
         }
         stopMotors();
         }
-    public double getRange () {
-        double range = rangeSensor.getDistance(DistanceUnit.INCH);
-        return range;
-    }
+
 
 }
