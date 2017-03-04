@@ -186,17 +186,10 @@ public class DragonoidsAuto extends LinearOpMode {
         while (opModeIsActive() && (Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))*/)) {
 
-            if (gyro.getIntegratedZValue() != (targetAngle)) {
                 motorRF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
                 motorRB.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
                 motorLF.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
                 motorLB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
-            } else {
-                motorRF.setPower(power);
-                motorRB.setPower(power);
-                motorLF.setPower(power);
-                motorLB.setPower(power);
-            }
         }
 
         stopMotors();
@@ -295,6 +288,12 @@ public class DragonoidsAuto extends LinearOpMode {
 
         while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)*/)) {
+
+                    motorRF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
+                    motorRB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
+                    motorLF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
+                    motorLB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
+
         }
 
         stopMotors();
@@ -345,6 +344,9 @@ public class DragonoidsAuto extends LinearOpMode {
     }
 
     public void shoot () {
+        motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         sleep(250);
         motorShootOne.setPower(.62);
         motorShootTwo.setPower(.62);
