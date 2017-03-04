@@ -17,7 +17,6 @@ public class Autotest extends DragonoidsAuto {
 
         while (opModeIsActive()) {
             //blue side full autonomous
-            forward(-.75, .4);
             shoot();
             forward(-.7, .6);
             strafe(.75, .6);
