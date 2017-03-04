@@ -138,6 +138,8 @@ public class TeleOpMecanum extends LinearOpMode {
 
         motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
 
+//MediaPlayer player = MediaPlayer.create(hardwareMap.appContext, R.raw.file);
+        //  player.start();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -174,7 +176,7 @@ public class TeleOpMecanum extends LinearOpMode {
             if (gamepad2.right_bumper) {
                 loader.setPosition(0.3);
             } else {
-                loader.setPosition(.515);
+                loader.setPosition(.495);
             }
 
             if (gamepad2.right_trigger > 0.1) {
