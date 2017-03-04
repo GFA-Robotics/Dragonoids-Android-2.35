@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-
+//importing all relevant hardware classes
 import android.graphics.Color;
 import android.hardware.SensorEventListener;
 
@@ -21,10 +21,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRRangeSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 import static java.lang.Thread.sleep;
 
 /**
@@ -32,48 +30,50 @@ import static java.lang.Thread.sleep;
  */
 
 public class DragonoidsAuto extends LinearOpMode {
+
+    //declaring all drive motors
     DcMotor motorRF;
     DcMotor motorRB;
     DcMotor motorLF;
     DcMotor motorLB;
-//MediaPlayer player = MediaPlayer.create(hardwareMap.appContext, R.raw.file);
-  //  player.start();
+
+    //declaring all shoot motors
     DcMotor motorShootOne;
     DcMotor motorShootTwo;
 
+    //declaring ball loader servo
     Servo loader;
 
-    Servo buttonPresser;
-
+    //declaring lift servos
     Servo leftRelease;
     Servo rightRelease;
 
+    //declaring various sensors
     ColorSensor colorSensor;
     OpticalDistanceSensor lineSensor;
-
     ModernRoboticsI2cRangeSensor rangeSensor;
-
     ModernRoboticsI2cGyro gyro;
 
+    //declaring variables for angle adjustment
     public int targetAngle = 0;
     private int adjustedAngle;
 
+    //declaring variable to act
     private double initLight;
 
-
-
+    // encoder counts per rotation on current wheels
     final static int ENCODER_CPR = 1120;
+    //diameter of wheel is 2 inches
     final static double WHEEL_CIRC = 4 * Math.PI;
     // 1 tile length is 24 inches
     final static int TILE = 24;
-
+    //number of rotations per tile
     final static double ROTATE = TILE / WHEEL_CIRC;
 
+    //value to hold color being sensed
     int color;
-
     // hsvValues is an array that will hold the hue, saturation, and value information.
     float hsvValues[] = {0F,0F,0F};
-
     // values is a reference to the hsvValues array.
     final float values[] = hsvValues;
 
@@ -84,12 +84,15 @@ public class DragonoidsAuto extends LinearOpMode {
     int fEncoder;
     int fLastEncoder;
 
+    //runopmode is all of the functions that run when init is pressed on the robot
     public void runOpMode() throws InterruptedException {
 
-        // get a reference to our ColorSensor object.
-        colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        // get a reference to our various hardware objects. The string in the .get() method must be inputed into the phone config (case-sensitive)
 
+        colorSensor = hardwareMap.colorSensor.get("sensor_color");
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
+        gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
+        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
 
         motorRF = hardwareMap.dcMotor.get("right_drive_front");
         motorRB = hardwareMap.dcMotor.get("right_drive_back");
@@ -99,54 +102,47 @@ public class DragonoidsAuto extends LinearOpMode {
         motorShootOne = hardwareMap.dcMotor.get("shooterOne");
         motorShootTwo = hardwareMap.dcMotor.get("shooterTwo");
 
-        motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
-
         loader = hardwareMap.servo.get("loader");
 
         leftRelease = hardwareMap.servo.get("leftLift");
         rightRelease = hardwareMap.servo.get("rightLift");
 
-        leftRelease.setDirection(Servo.Direction.REVERSE);
-
-        gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
-
-        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
-
         //starts backwards and drives backwards
         motorRF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motorRB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        motorShootTwo.setDirection(DcMotor.Direction.REVERSE);
+        leftRelease.setDirection(Servo.Direction.REVERSE);
 
+        //if drive motors receive no power, engage brakes
         motorRF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        //gyro must be recalibrated upon every auto to ensure correct turns. Gyro is done calibrating when the DS outputs "calibrated:0"
         gyro.calibrate();
         while (!isStopRequested() && gyro.isCalibrating()) {
             sleep(1);
             telemetry.addData("Measurement mode", gyro.getMeasurementMode());
             telemetry.update();
         }
-
         gyro.resetZAxisIntegrator();
-
-        targetAngle = 0;
 
         // changed the heading to signed heading [-360,360]
         gyro.setHeadingMode(ModernRoboticsI2cGyro.HeadingMode.HEADING_CARTESIAN);
 
-        loader.setPosition(.515);
+        //ODS light is initialized to get a baseline for brightness on gray tiles
+        initLight = lineSensor.getLightDetected();
 
+        //LED is disabled as it does nothing relevant and draws power
+        colorSensor.enableLed(false);
+
+        //servos need to be in correct position for shooting/lifting
+        loader.setPosition(.515);
         leftRelease.setPosition(1);
         rightRelease.setPosition(1);
 
-        motorShootOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorShootTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        initLight = lineSensor.getLightDetected();
-
-        colorSensor.enableLed(false);
-
+        //when starting the robot, target angle should be 0 and calibrate in the correct orientation
         telemetry.addData("Calibrated", targetAngle);
         telemetry.update();
 

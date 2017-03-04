@@ -18,7 +18,7 @@ public class DragonoidsAutoRed1 extends DragonoidsAuto {
         while (opModeIsActive()) {
             forward(1.5,.6);
             strafe(1.25, .8);
-            forward(2.2,1);
+            forward(2.15,1);
             adjustHeading();
             adjustRange();
             alignLine(false);

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  */
 @Disabled
 //@Autonomous(name="Red Autonomous Button Secondary", group="Red")
-public class DragonoidsAutoRed3 extends DragonoidsAuto {
+public class DragonoidsAutoRedOld extends DragonoidsAuto {
     @Override
     public void runOpMode() throws InterruptedException {
         super.runOpMode();
