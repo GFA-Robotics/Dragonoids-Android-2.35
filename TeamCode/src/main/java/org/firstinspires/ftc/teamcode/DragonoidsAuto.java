@@ -166,6 +166,25 @@ public class DragonoidsAuto extends LinearOpMode {
         motorLB.setPower(0);
     }
 
+    /*auto corrects power to ensure correct horizontal/vertical motion
+    CAN BE USED TO MAKE CURVED MOVEMENTS IF SLIGHTLY ITERATED. WAS UNABLE TO BE TESTED DUE TO SCOTT BEING THE NEW CHARLEY
+    just create additional input to determine a target angle to adjust by instead of using the global target angle*/
+    public void autoCorrect(double power, boolean motion){
+        //true is forward false is strafe
+        if(motion){
+            motorRF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
+            motorRB.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
+            motorLF.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
+            motorLB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
+        }
+        else if(!motion){
+            motorRF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
+            motorRB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
+            motorLF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
+            motorLB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
+        }
+    }
+
     //forward moves the robot forward passing a distance in units of tiles and a motor power
     public void forward (double distance, double power) {
         resetEncoders();
@@ -194,10 +213,7 @@ public class DragonoidsAuto extends LinearOpMode {
         //this loop actively corrects angle during movement by adjusting power based on gyro distance from target angle
         while (opModeIsActive() && (Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance))*/)) {
-                motorRF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
-                motorRB.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
-                motorLF.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
-                motorLB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
+                autoCorrect(power,true);
         }
 
         stopMotors();
@@ -307,10 +323,7 @@ public class DragonoidsAuto extends LinearOpMode {
         while (opModeIsActive() && (Math.abs(motorRB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorRF.getCurrentPosition())<=Math.abs(distance)/* ||
                 Math.abs(motorLB.getCurrentPosition())<=Math.abs(distance) || Math.abs(motorLF.getCurrentPosition())<=Math.abs(distance)*/)) {
 
-                    motorRF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
-                    motorRB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
-                    motorLF.setPower(power+(targetAngle - gyro.getIntegratedZValue()) * .012);
-                    motorLB.setPower(power-(targetAngle - gyro.getIntegratedZValue()) * .012);
+                    autoCorrect(power,false);
 
         }
 
